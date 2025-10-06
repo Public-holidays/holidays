@@ -26,7 +26,7 @@ jobs:
     - name: Generate calendar files
       run: |
         ls -alR
-        python scripts/generate_holidays.py
+        python scripts/generate-holidays.py
         
     - name: Commit and push if changes
       run: |
