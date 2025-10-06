@@ -1,14 +1,18 @@
-# 🇦🇹 Austrian Public Holidays Calendar
+# 🇦🇹 Austrian Public Holidays & School Holidays
 
-Subscribe to Austrian national holidays in your favorite calendar app!
+Subscribe to Austrian holidays in your favorite calendar app!
 
-## 📅 Available Calendars
+---
+
+## 📅 Public Holidays (Nationwide)
 
 ### Rolling Calendar (Recommended)
 Always up-to-date with current and future holidays (7 years).
 
 **Subscribe URL:**
+```
 https://public-holidays.github.io/holidays/output/austrian_holidays.ics
+```
 
 [📥 Download](https://public-holidays.github.io/holidays/output/austrian_holidays.ics) | Contains 2024-2030
 
@@ -17,6 +21,27 @@ https://public-holidays.github.io/holidays/output/austrian_holidays.ics
 - [2025](https://public-holidays.github.io/holidays/output/austrian_holidays_2025.ics)
 - [2026](https://public-holidays.github.io/holidays/output/austrian_holidays_2026.ics)
 - [2027](https://public-holidays.github.io/holidays/output/austrian_holidays_2027.ics)
+
+---
+
+## 🎒 School Holidays (Schulferien) by Bundesland
+
+Includes semester breaks and summer holidays for each state (current year + next 5 years).
+
+### Eastern Austria
+- **[Burgenland](https://public-holidays.github.io/holidays/output/school/school_holidays_burgenland.ics)**
+- **[Niederösterreich](https://public-holidays.github.io/holidays/output/school/school_holidays_niederoesterreich.ics)**
+- **[Wien](https://public-holidays.github.io/holidays/output/school/school_holidays_wien.ics)**
+
+### Western & Southern Austria
+- **[Kärnten](https://public-holidays.github.io/holidays/output/school/school_holidays_kaernten.ics)**
+- **[Oberösterreich](https://public-holidays.github.io/holidays/output/school/school_holidays_oberoesterreich.ics)**
+- **[Salzburg](https://public-holidays.github.io/holidays/output/school/school_holidays_salzburg.ics)**
+- **[Steiermark](https://public-holidays.github.io/holidays/output/school/school_holidays_steiermark.ics)**
+- **[Tirol](https://public-holidays.github.io/holidays/output/school/school_holidays_tirol.ics)**
+- **[Vorarlberg](https://public-holidays.github.io/holidays/output/school/school_holidays_vorarlberg.ics)**
+
+---
 
 ## 📖 How to Subscribe
 
@@ -40,30 +65,69 @@ https://public-holidays.github.io/holidays/output/austrian_holidays.ics
 3. Paste the calendar URL
 4. Click **"Import"**
 
-## 🎉 Included Holidays (13 total)
+---
 
-- Neujahr (New Year's Day)
-- Heilige Drei Könige (Epiphany)
-- Ostermontag (Easter Monday)
-- Staatsfeiertag (Labour Day)
-- Christi Himmelfahrt (Ascension Day)
-- Pfingstmontag (Whit Monday)
-- Fronleichnam (Corpus Christi)
-- Mariä Himmelfahrt (Assumption of Mary)
-- Nationalfeiertag (National Day)
-- Allerheiligen (All Saints' Day)
-- Mariä Empfängnis (Immaculate Conception)
-- Christtag (Christmas Day)
-- Stefanitag (St. Stephen's Day)
+## 🎉 Included Public Holidays (13 total)
 
-## 🔄 Update Frequency
-
-The calendar is automatically regenerated on the 1st of every month, ensuring you always have the latest holidays.
-
-## ℹ️ About
-
-This calendar includes all **nationwide public holidays** in Austria as defined by federal law. Easter-dependent holidays are calculated using the Gauss Easter algorithm.
+- **Neujahr** (New Year's Day) - January 1
+- **Heilige Drei Könige** (Epiphany) - January 6
+- **Ostermontag** (Easter Monday) - *varies*
+- **Staatsfeiertag** (Labour Day) - May 1
+- **Christi Himmelfahrt** (Ascension Day) - *varies*
+- **Pfingstmontag** (Whit Monday) - *varies*
+- **Fronleichnam** (Corpus Christi) - *varies*
+- **Mariä Himmelfahrt** (Assumption of Mary) - August 15
+- **Nationalfeiertag** (National Day) - October 26
+- **Allerheiligen** (All Saints' Day) - November 1
+- **Mariä Empfängnis** (Immaculate Conception) - December 8
+- **Christtag** (Christmas Day) - December 25
+- **Stefanitag** (St. Stephen's Day) - December 26
 
 ---
 
-**Note:** Calendar updates may take up to 24-48 hours to appear in Google Calendar after regeneration.
+## 📚 School Holidays Information
+
+School holiday dates are calculated according to the Austrian **Schulzeitgesetz § 2**.
+
+### Semester Breaks (Semesterferien)
+One week in February, varying by Bundesland:
+- **Niederösterreich, Wien**: 1st Monday in February
+- **Burgenland, Kärnten, Salzburg, Tirol, Vorarlberg**: 2nd Monday in February
+- **Oberösterreich, Steiermark**: 3rd Monday in February
+
+### Summer Holidays (Sommerferien)
+Approximately 9 weeks, starting on a Saturday:
+- **Burgenland, Niederösterreich, Wien**: Saturday between June 28 - July 4
+- **Kärnten, Oberösterreich, Salzburg, Steiermark, Tirol, Vorarlberg**: Saturday between July 5 - July 11
+
+---
+
+## 🔄 Update Frequency
+
+All calendars are automatically regenerated on the **1st of every month**, ensuring you always have the latest holidays.
+
+---
+
+## ℹ️ About
+
+- **Public holidays** include all nationwide public holidays in Austria as defined by federal law
+- **Easter-dependent holidays** are calculated using the Gauss Easter algorithm
+- **School holidays** follow the official Austrian school calendar regulations (Schulzeitgesetz)
+
+---
+
+## ⚠️ Note
+
+Calendar updates may take up to 24-48 hours to appear in Google Calendar after regeneration.
+
+---
+
+## 🤝 Contributing
+
+Found an error or want to add more features? Feel free to open an issue or pull request!
+
+---
+
+## 📄 License
+
+Public domain - free to use for everyone.
