@@ -285,400 +285,433 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🇦🇹 Österreichische Feiertage</h1>
-            <p>Interaktiver Kalender für gesetzliche Feiertage und Schulferien</p>
-        </header>
-        
-        <div class="controls">
-            <div class="control-group">
-                <div class="control-item">
-                    <label>Jahr</label>
-                    <select id="yearSelect" onchange="updateCalendar()">
-                        <!-- Populated by JS -->
-                    </select>
-                </div>
-                <div class="control-item">
-                    <label>Bundesland (für Schulferien)</label>
-                    <select id="bundeslandSelect" onchange="updateCalendar()">
-                        <option value="Wien">Wien</option>
-                        <option value="Niederösterreich">Niederösterreich</option>
-                        <option value="Burgenland">Burgenland</option>
-                        <option value="Oberösterreich">Oberösterreich</option>
-                        <option value="Steiermark">Steiermark</option>
-                        <option value="Kärnten">Kärnten</option>
-                        <option value="Salzburg">Salzburg</option>
-                        <option value="Tirol">Tirol</option>
-                        <option value="Vorarlberg">Vorarlberg</option>
-                    </select>
-                </div>
+<div class="container">
+    <header>
+        <h1>🇦🇹 Österreichische Feiertage</h1>
+        <p>Interaktiver Kalender für gesetzliche Feiertage und Schulferien</p>
+    </header>
+
+    <div class="controls">
+        <div class="control-group">
+            <div class="control-item">
+                <label>Jahr</label>
+                <select id="yearSelect" onchange="updateCalendar()">
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+            <div class="control-item">
+                <label>Bundesland (für Schulferien)</label>
+                <select id="bundeslandSelect" onchange="updateCalendar()">
+                    <option value="Wien">Wien</option>
+                    <option value="Niederösterreich">Niederösterreich</option>
+                    <option value="Burgenland">Burgenland</option>
+                    <option value="Oberösterreich">Oberösterreich</option>
+                    <option value="Steiermark">Steiermark</option>
+                    <option value="Kärnten">Kärnten</option>
+                    <option value="Salzburg">Salzburg</option>
+                    <option value="Tirol">Tirol</option>
+                    <option value="Vorarlberg">Vorarlberg</option>
+                </select>
             </div>
         </div>
-
-        <div class="content">
-            <div class="tabs">
-                <button class="tab active" onclick="switchTab('public')">Gesetzliche Feiertage</button>
-                <button class="tab" onclick="switchTab('school')">Schulferien</button>
-                <button class="tab" onclick="switchTab('download')">Kalender herunterladen</button>
-            </div>
-
-            <div id="public-tab" class="tab-content active">
-                <h2>📅 Gesetzliche Feiertage <span id="public-year"></span></h2>
-                <div id="public-holidays" class="holiday-grid">
-                    <div class="loading">Lade Feiertage...</div>
-                </div>
-            </div>
-
-            <div id="school-tab" class="tab-content">
-                <h2>🎒 Schulferien <span id="school-year"></span> - <span id="school-bundesland"></span></h2>
-                <div id="school-holidays" class="holiday-grid">
-                    <div class="loading">Lade Schulferien...</div>
-                </div>
-            </div>
-
-            <div id="download-tab" class="tab-content">
-                <h2>📥 ICS-Kalender herunterladen</h2>
-
-                <div class="download-section">
-                    <h3>Gesetzliche Feiertage</h3>
-                    <p>Abonnieren Sie diese Kalender, um automatisch alle österreichischen Feiertage zu erhalten</p>
-                    <div class="download-links">
-                        <a href="https://public-holidays.github.io/holidays/output/austrian_holidays.ics" class="download-btn">📆 Fortlaufender Kalender (2024-2030)</a>
-                        <a href="https://public-holidays.github.io/holidays/output/austrian_holidays_2025.ics" class="download-btn">2025</a>
-                        <a href="https://public-holidays.github.io/holidays/output/austrian_holidays_2026.ics" class="download-btn">2026</a>
-                        <a href="https://public-holidays.github.io/holidays/output/austrian_holidays_2027.ics" class="download-btn">2027</a>
-                    </div>
-                </div>
-
-                <div class="download-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <h3>Schulferien nach Bundesland</h3>
-                    <p>Jeder Kalender enthält alle Schulferien, Landespatrontage und Semesterferien</p>
-                    <div class="download-links">
-                        <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_wien.ics" class="download-btn">Wien</a>
-                        <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_niederoesterreich.ics" class="download-btn">Niederösterreich</a>
-                        <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_burgenland.ics" class="download-btn">Burgenland</a>
-                        <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_oberoesterreich.ics" class="download-btn">Oberösterreich</a>
-                        <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_steiermark.ics" class="download-btn">Steiermark</a>
-                        <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_kaernten.ics" class="download-btn">Kärnten</a>
-                        <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_salzburg.ics" class="download-btn">Salzburg</a>
-                        <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_tirol.ics" class="download-btn">Tirol</a>
-                        <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_vorarlberg.ics" class="download-btn">Vorarlberg</a>
-                    </div>
-                </div>
-
-                <div class="info-box">
-                    <h4>📖 So abonnieren Sie</h4>
-                    <p><strong>Google Kalender:</strong> Klicken Sie auf + neben "Weitere Kalender" → Über URL → Link einfügen</p>
-                    <p><strong>Apple Kalender:</strong> Einstellungen → Kalender → Accounts → Abonnierter Kalender hinzufügen</p>
-                    <p><strong>Outlook:</strong> Kalender hinzufügen → Aus dem Web abonnieren → Link einfügen</p>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <p><strong>🇦🇹 Österreichische Feiertage & Schulferien</strong></p>
-            <p>Berechnet in Echtzeit nach österreichischem Recht (Schulzeitgesetz)</p>
-            <p style="margin-top: 10px;">Osterdaten nach dem Gauß'schen Algorithmus berechnet</p>
-        </footer>
     </div>
 
-    <script>
-        // Gauss Easter Algorithm
-        function calculateEaster(year) {
-            const a = year % 19;
-            const b = year % 4;
-            const c = year % 7;
-            const k = Math.floor(year / 100);
-            const p = Math.floor((13 + 8 * k) / 25);
-            const q = Math.floor(k / 4);
-            const M = (15 - p + k - q) % 30;
-            const N = (4 + k - q) % 7;
-            const d = (19 * a + M) % 30;
-            const e = (2 * b + 4 * c + 6 * d + N) % 7;
+    <div class="content">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('public')">Gesetzliche Feiertage</button>
+            <button class="tab" onclick="switchTab('school')">Schulferien</button>
+            <button class="tab" onclick="switchTab('download')">Kalender herunterladen</button>
+        </div>
 
-            let day, month;
-            if (d + e < 10) {
-                day = d + e + 22;
-                month = 3;
-            } else {
-                day = d + e - 9;
-                month = 4;
-            }
+        <div id="public-tab" class="tab-content active">
+            <h2>📅 Gesetzliche Feiertage <span id="public-year"></span></h2>
+            <div id="public-holidays" class="holiday-grid">
+                <div class="loading">Lade Feiertage...</div>
+            </div>
+        </div>
 
-            if (day === 26 && month === 4) day = 19;
-            if (day === 25 && month === 4 && d === 28 && e === 6 && a > 10) day = 18;
+        <div id="school-tab" class="tab-content">
+            <h2>🎒 Schulferien <span id="school-year"></span> - <span id="school-bundesland"></span></h2>
+            <div id="school-holidays" class="holiday-grid">
+                <div class="loading">Lade Schulferien...</div>
+            </div>
+        </div>
 
-            return new Date(year, month - 1, day);
+        <div id="download-tab" class="tab-content">
+            <h2>📥 ICS-Kalender herunterladen</h2>
+
+            <div class="download-section">
+                <h3>Gesetzliche Feiertage</h3>
+                <p>Abonnieren Sie diese Kalender, um automatisch alle österreichischen Feiertage zu erhalten</p>
+                <div class="download-links">
+                    <a href="https://public-holidays.github.io/holidays/output/austrian_holidays.ics"
+                       class="download-btn">📆 Fortlaufender Kalender (2024-2030)</a>
+                    <a href="https://public-holidays.github.io/holidays/output/austrian_holidays_2025.ics"
+                       class="download-btn">2025</a>
+                    <a href="https://public-holidays.github.io/holidays/output/austrian_holidays_2026.ics"
+                       class="download-btn">2026</a>
+                    <a href="https://public-holidays.github.io/holidays/output/austrian_holidays_2027.ics"
+                       class="download-btn">2027</a>
+                </div>
+            </div>
+
+            <div class="download-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <h3>Schulferien nach Bundesland</h3>
+                <p>Jeder Kalender enthält alle Schulferien, Landespatrontage und Semesterferien</p>
+                <div class="download-links">
+                    <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_wien.ics"
+                       class="download-btn">Wien</a>
+                    <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_niederoesterreich.ics"
+                       class="download-btn">Niederösterreich</a>
+                    <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_burgenland.ics"
+                       class="download-btn">Burgenland</a>
+                    <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_oberoesterreich.ics"
+                       class="download-btn">Oberösterreich</a>
+                    <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_steiermark.ics"
+                       class="download-btn">Steiermark</a>
+                    <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_kaernten.ics"
+                       class="download-btn">Kärnten</a>
+                    <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_salzburg.ics"
+                       class="download-btn">Salzburg</a>
+                    <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_tirol.ics"
+                       class="download-btn">Tirol</a>
+                    <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_vorarlberg.ics"
+                       class="download-btn">Vorarlberg</a>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📖 So abonnieren Sie</h4>
+                <p><strong>Google Kalender:</strong> Klicken Sie auf + neben "Weitere Kalender" → Über URL → Link
+                    einfügen</p>
+                <p><strong>Apple Kalender:</strong> Einstellungen → Kalender → Accounts → Abonnierter Kalender
+                    hinzufügen</p>
+                <p><strong>Outlook:</strong> Kalender hinzufügen → Aus dem Web abonnieren → Link einfügen</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>🇦🇹 Österreichische Feiertage & Schulferien</strong></p>
+        <p>Berechnet in Echtzeit nach österreichischem Recht (Schulzeitgesetz)</p>
+        <p style="margin-top: 10px;">Osterdaten nach dem Gauß'schen Algorithmus berechnet</p>
+
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
+            <h4 style="margin-bottom: 10px;">Impressum</h4>
+            <p><strong>Informationspflicht gemäß § 5 E-Commerce Gesetz und § 25 Mediengesetz:</strong></p>
+            <p>
+                Reinhold Degenfellner<br>
+                Puchenau<br>
+                Österreich
+            </p>
+            <p style="margin-top: 10px;">
+                E-Mail: rdegenfellner-holidays@gmail.com
+            </p>
+            <p style="margin-top: 15px; font-size: 0.9em;">
+                <strong>Haftungsausschluss:</strong> Alle Angaben ohne Gewähr. Die Daten werden nach bestem Wissen
+                und Gewissen berechnet, jedoch wird keine Haftung für die Richtigkeit übernommen.
+                Bitte prüfen Sie wichtige Termine zusätzlich bei offiziellen Stellen.
+            </p>
+        </div>
+    </footer>
+</div>
+
+<script>
+    // Gauss Easter Algorithm
+    function calculateEaster(year) {
+        const a = year % 19;
+        const b = year % 4;
+        const c = year % 7;
+        const k = Math.floor(year / 100);
+        const p = Math.floor((13 + 8 * k) / 25);
+        const q = Math.floor(k / 4);
+        const M = (15 - p + k - q) % 30;
+        const N = (4 + k - q) % 7;
+        const d = (19 * a + M) % 30;
+        const e = (2 * b + 4 * c + 6 * d + N) % 7;
+
+        let day, month;
+        if (d + e < 10) {
+            day = d + e + 22;
+            month = 3;
+        } else {
+            day = d + e - 9;
+            month = 4;
         }
 
-        // Helper functions
-        function addDays(date, days) {
-            const result = new Date(date);
-            result.setDate(result.getDate() + days);
-            return result;
+        if (day === 26 && month === 4) day = 19;
+        if (day === 25 && month === 4 && d === 28 && e === 6 && a > 10) day = 18;
+
+        return new Date(year, month - 1, day);
+    }
+
+    // Helper functions
+    function addDays(date, days) {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+
+    function formatDate(date) {
+        const days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+        const months = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                      'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+        return `${days[date.getDay()]}, ${date.getDate()}. ${months[date.getMonth()]} ${date.getFullYear()}`;
+    }
+
+    function formatDateShort(date) {
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    }
+
+    function getDaysBetween(start, end) {
+        const diffTime = Math.abs(end - start);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays + 1; // Include both start and end day
+    }
+
+    // Get nth weekday of month (e.g., 2nd Monday)
+    function getNthWeekdayOfMonth(year, month, weekday, n) {
+        const firstDay = new Date(year, month - 1, 1);
+        const firstWeekday = firstDay.getDay();
+        const daysUntilWeekday = (weekday - firstWeekday + 7) % 7;
+        const firstOccurrence = 1 + daysUntilWeekday;
+        const nthOccurrence = firstOccurrence + (n - 1) * 7;
+        return new Date(year, month - 1, nthOccurrence);
+    }
+
+    // Get first Saturday in date range
+    function getFirstSaturdayInRange(year, month, startDay) {
+        let date = new Date(year, month - 1, startDay);
+        while (date.getDay() !== 6) { // 6 = Saturday
+            date.setDate(date.getDate() + 1);
         }
+        return date;
+    }
 
-        function formatDate(date) {
-            const days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
-            const months = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni',
-                          'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-            return `${days[date.getDay()]}, ${date.getDate()}. ${months[date.getMonth()]} ${date.getFullYear()}`;
-        }
+    // Public Holidays
+    function getPublicHolidays(year) {
+        const easter = calculateEaster(year);
 
-        function formatDateShort(date) {
-            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-        }
+        return [
+            { date: new Date(year, 0, 1), name: 'Neujahr', nameEn: 'New Year\'s Day' },
+            { date: new Date(year, 0, 6), name: 'Heilige Drei Könige', nameEn: 'Epiphany' },
+            { date: addDays(easter, 1), name: 'Ostermontag', nameEn: 'Easter Monday' },
+            { date: new Date(year, 4, 1), name: 'Staatsfeiertag', nameEn: 'Labour Day' },
+            { date: addDays(easter, 39), name: 'Christi Himmelfahrt', nameEn: 'Ascension Day' },
+            { date: addDays(easter, 50), name: 'Pfingstmontag', nameEn: 'Whit Monday' },
+            { date: addDays(easter, 60), name: 'Fronleichnam', nameEn: 'Corpus Christi' },
+            { date: new Date(year, 7, 15), name: 'Mariä Himmelfahrt', nameEn: 'Assumption of Mary' },
+            { date: new Date(year, 9, 26), name: 'Nationalfeiertag', nameEn: 'National Day' },
+            { date: new Date(year, 10, 1), name: 'Allerheiligen', nameEn: 'All Saints\' Day' },
+            { date: new Date(year, 11, 8), name: 'Mariä Empfängnis', nameEn: 'Immaculate Conception' },
+            { date: new Date(year, 11, 25), name: 'Christtag', nameEn: 'Christmas Day' },
+            { date: new Date(year, 11, 26), name: 'Stefanitag', nameEn: 'St. Stephen\'s Day' }
+        ].sort((a, b) => a.date - b.date);
+    }
 
-        function getDaysBetween(start, end) {
-            const diffTime = Math.abs(end - start);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            return diffDays + 1; // Include both start and end day
-        }
+    // School Holidays
+    function getSchoolHolidays(year, bundesland) {
+        const holidays = [];
+        const easter = calculateEaster(year);
 
-        // Get nth weekday of month (e.g., 2nd Monday)
-        function getNthWeekdayOfMonth(year, month, weekday, n) {
-            const firstDay = new Date(year, month - 1, 1);
-            const firstWeekday = firstDay.getDay();
-            const daysUntilWeekday = (weekday - firstWeekday + 7) % 7;
-            const firstOccurrence = 1 + daysUntilWeekday;
-            const nthOccurrence = firstOccurrence + (n - 1) * 7;
-            return new Date(year, month - 1, nthOccurrence);
-        }
+        // Landespatron days
+        const patronDays = {
+            'Kärnten': { date: new Date(year, 2, 19), name: 'Hl. Josef', nameEn: 'St. Joseph' },
+            'Steiermark': { date: new Date(year, 2, 19), name: 'Hl. Josef', nameEn: 'St. Joseph' },
+            'Tirol': { date: new Date(year, 2, 19), name: 'Hl. Josef', nameEn: 'St. Joseph' },
+            'Vorarlberg': { date: new Date(year, 2, 19), name: 'Hl. Josef', nameEn: 'St. Joseph' },
+            'Oberösterreich': { date: new Date(year, 4, 4), name: 'Hl. Florian', nameEn: 'St. Florian' },
+            'Salzburg': { date: new Date(year, 8, 24), name: 'Hl. Rupert', nameEn: 'St. Rupert' },
+            'Burgenland': { date: new Date(year, 10, 11), name: 'Hl. Martin', nameEn: 'St. Martin' },
+            'Wien': { date: new Date(year, 10, 15), name: 'Hl. Leopold', nameEn: 'St. Leopold' },
+            'Niederösterreich': { date: new Date(year, 10, 15), name: 'Hl. Leopold', nameEn: 'St. Leopold' }
+        };
 
-        // Get first Saturday in date range
-        function getFirstSaturdayInRange(year, month, startDay) {
-            let date = new Date(year, month - 1, startDay);
-            while (date.getDay() !== 6) { // 6 = Saturday
-                date.setDate(date.getDate() + 1);
-            }
-            return date;
-        }
-
-        // Public Holidays
-        function getPublicHolidays(year) {
-            const easter = calculateEaster(year);
-
-            return [
-                { date: new Date(year, 0, 1), name: 'Neujahr', nameEn: 'New Year\'s Day' },
-                { date: new Date(year, 0, 6), name: 'Heilige Drei Könige', nameEn: 'Epiphany' },
-                { date: addDays(easter, 1), name: 'Ostermontag', nameEn: 'Easter Monday' },
-                { date: new Date(year, 4, 1), name: 'Staatsfeiertag', nameEn: 'Labour Day' },
-                { date: addDays(easter, 39), name: 'Christi Himmelfahrt', nameEn: 'Ascension Day' },
-                { date: addDays(easter, 50), name: 'Pfingstmontag', nameEn: 'Whit Monday' },
-                { date: addDays(easter, 60), name: 'Fronleichnam', nameEn: 'Corpus Christi' },
-                { date: new Date(year, 7, 15), name: 'Mariä Himmelfahrt', nameEn: 'Assumption of Mary' },
-                { date: new Date(year, 9, 26), name: 'Nationalfeiertag', nameEn: 'National Day' },
-                { date: new Date(year, 10, 1), name: 'Allerheiligen', nameEn: 'All Saints\' Day' },
-                { date: new Date(year, 11, 8), name: 'Mariä Empfängnis', nameEn: 'Immaculate Conception' },
-                { date: new Date(year, 11, 25), name: 'Christtag', nameEn: 'Christmas Day' },
-                { date: new Date(year, 11, 26), name: 'Stefanitag', nameEn: 'St. Stephen\'s Day' }
-            ].sort((a, b) => a.date - b.date);
-        }
-
-        // School Holidays
-        function getSchoolHolidays(year, bundesland) {
-            const holidays = [];
-            const easter = calculateEaster(year);
-
-            // Landespatron days
-            const patronDays = {
-                'Kärnten': { date: new Date(year, 2, 19), name: 'Hl. Josef', nameEn: 'St. Joseph' },
-                'Steiermark': { date: new Date(year, 2, 19), name: 'Hl. Josef', nameEn: 'St. Joseph' },
-                'Tirol': { date: new Date(year, 2, 19), name: 'Hl. Josef', nameEn: 'St. Joseph' },
-                'Vorarlberg': { date: new Date(year, 2, 19), name: 'Hl. Josef', nameEn: 'St. Joseph' },
-                'Oberösterreich': { date: new Date(year, 4, 4), name: 'Hl. Florian', nameEn: 'St. Florian' },
-                'Salzburg': { date: new Date(year, 8, 24), name: 'Hl. Rupert', nameEn: 'St. Rupert' },
-                'Burgenland': { date: new Date(year, 10, 11), name: 'Hl. Martin', nameEn: 'St. Martin' },
-                'Wien': { date: new Date(year, 10, 15), name: 'Hl. Leopold', nameEn: 'St. Leopold' },
-                'Niederösterreich': { date: new Date(year, 10, 15), name: 'Hl. Leopold', nameEn: 'St. Leopold' }
-            };
-
-            if (patronDays[bundesland]) {
-                holidays.push({
-                    start: patronDays[bundesland].date,
-                    end: patronDays[bundesland].date,
-                    name: patronDays[bundesland].name,
-                    nameEn: patronDays[bundesland].nameEn
-                });
-            }
-
-            // Kärnten additional day
-            if (bundesland === 'Kärnten') {
-                holidays.push({
-                    start: new Date(year, 9, 10),
-                    end: new Date(year, 9, 10),
-                    name: 'Tag der Volksabstimmung',
-                    nameEn: 'Carinthian Plebiscite Day'
-                });
-            }
-
-            // Semester break
-            const semesterGroups = {
-                'group1': ['Niederösterreich', 'Wien'],
-                'group2': ['Burgenland', 'Kärnten', 'Salzburg', 'Tirol', 'Vorarlberg'],
-                'group3': ['Oberösterreich', 'Steiermark']
-            };
-
-            let semesterStart;
-            if (semesterGroups.group1.includes(bundesland)) {
-                semesterStart = getNthWeekdayOfMonth(year, 2, 1, 1); // 1st Monday
-            } else if (semesterGroups.group2.includes(bundesland)) {
-                semesterStart = getNthWeekdayOfMonth(year, 2, 1, 2); // 2nd Monday
-            } else {
-                semesterStart = getNthWeekdayOfMonth(year, 2, 1, 3); // 3rd Monday
-            }
-
+        if (patronDays[bundesland]) {
             holidays.push({
-                start: semesterStart,
-                end: addDays(semesterStart, 5),
-                name: 'Semesterferien',
-                nameEn: 'Semester Break'
+                start: patronDays[bundesland].date,
+                end: patronDays[bundesland].date,
+                name: patronDays[bundesland].name,
+                nameEn: patronDays[bundesland].nameEn
             });
-
-            // Easter break
-            const palmSunday = addDays(easter, -7);
-            const saturdayBeforePalm = addDays(palmSunday, -1);
-            const easterMonday = addDays(easter, 1);
-
-            holidays.push({
-                start: saturdayBeforePalm,
-                end: easterMonday,
-                name: 'Osterferien',
-                nameEn: 'Easter Break'
-            });
-
-            // Whit break
-            const whitSunday = addDays(easter, 49);
-            const saturdayBeforeWhit = addDays(whitSunday, -1);
-            const whitMonday = addDays(whitSunday, 1);
-
-            holidays.push({
-                start: saturdayBeforeWhit,
-                end: whitMonday,
-                name: 'Pfingstferien',
-                nameEn: 'Whit Break'
-            });
-
-            // Summer holidays
-            const summerGroup1 = ['Burgenland', 'Niederösterreich', 'Wien'];
-            let summerStart;
-
-            if (summerGroup1.includes(bundesland)) {
-                summerStart = getFirstSaturdayInRange(year, 6, 28);
-            } else {
-                summerStart = getFirstSaturdayInRange(year, 7, 5);
-            }
-
-            // School year starts in September
-            const schoolYearStart = summerGroup1.includes(bundesland)
-                ? getNthWeekdayOfMonth(year, 9, 1, 1)  // 1st Monday
-                : getNthWeekdayOfMonth(year, 9, 1, 2); // 2nd Monday
-            const summerEnd = addDays(schoolYearStart, -1);
-
-            holidays.push({
-                start: summerStart,
-                end: summerEnd,
-                name: 'Sommerferien',
-                nameEn: 'Summer Holidays'
-            });
-
-            // Autumn break
-            holidays.push({
-                start: new Date(year, 9, 27),
-                end: new Date(year, 9, 31),
-                name: 'Herbstferien',
-                nameEn: 'Autumn Break'
-            });
-
-            // Christmas break
-            holidays.push({
-                start: new Date(year, 11, 24),
-                end: new Date(year + 1, 0, 6),
-                name: 'Weihnachtsferien',
-                nameEn: 'Christmas Break'
-            });
-
-            return holidays.sort((a, b) => a.start - b.start);
         }
 
-        // Render functions
-        function renderPublicHolidays(year) {
-            const holidays = getPublicHolidays(year);
-            const container = document.getElementById('public-holidays');
-            document.getElementById('public-year').textContent = year;
+        // Kärnten additional day
+        if (bundesland === 'Kärnten') {
+            holidays.push({
+                start: new Date(year, 9, 10),
+                end: new Date(year, 9, 10),
+                name: 'Tag der Volksabstimmung',
+                nameEn: 'Carinthian Plebiscite Day'
+            });
+        }
 
-            container.innerHTML = holidays.map(h => `
+        // Semester break
+        const semesterGroups = {
+            'group1': ['Niederösterreich', 'Wien'],
+            'group2': ['Burgenland', 'Kärnten', 'Salzburg', 'Tirol', 'Vorarlberg'],
+            'group3': ['Oberösterreich', 'Steiermark']
+        };
+
+        let semesterStart;
+        if (semesterGroups.group1.includes(bundesland)) {
+            semesterStart = getNthWeekdayOfMonth(year, 2, 1, 1); // 1st Monday
+        } else if (semesterGroups.group2.includes(bundesland)) {
+            semesterStart = getNthWeekdayOfMonth(year, 2, 1, 2); // 2nd Monday
+        } else {
+            semesterStart = getNthWeekdayOfMonth(year, 2, 1, 3); // 3rd Monday
+        }
+
+        holidays.push({
+            start: semesterStart,
+            end: addDays(semesterStart, 5),
+            name: 'Semesterferien',
+            nameEn: 'Semester Break'
+        });
+
+        // Easter break
+        const palmSunday = addDays(easter, -7);
+        const saturdayBeforePalm = addDays(palmSunday, -1);
+        const easterMonday = addDays(easter, 1);
+
+        holidays.push({
+            start: saturdayBeforePalm,
+            end: easterMonday,
+            name: 'Osterferien',
+            nameEn: 'Easter Break'
+        });
+
+        // Whit break
+        const whitSunday = addDays(easter, 49);
+        const saturdayBeforeWhit = addDays(whitSunday, -1);
+        const whitMonday = addDays(whitSunday, 1);
+
+        holidays.push({
+            start: saturdayBeforeWhit,
+            end: whitMonday,
+            name: 'Pfingstferien',
+            nameEn: 'Whit Break'
+        });
+
+        // Summer holidays
+        const summerGroup1 = ['Burgenland', 'Niederösterreich', 'Wien'];
+        let summerStart;
+
+        if (summerGroup1.includes(bundesland)) {
+            summerStart = getFirstSaturdayInRange(year, 6, 28);
+        } else {
+            summerStart = getFirstSaturdayInRange(year, 7, 5);
+        }
+
+        // School year starts in September
+        const schoolYearStart = summerGroup1.includes(bundesland)
+            ? getNthWeekdayOfMonth(year, 9, 1, 1)  // 1st Monday
+            : getNthWeekdayOfMonth(year, 9, 1, 2); // 2nd Monday
+        const summerEnd = addDays(schoolYearStart, -1);
+
+        holidays.push({
+            start: summerStart,
+            end: summerEnd,
+            name: 'Sommerferien',
+            nameEn: 'Summer Holidays'
+        });
+
+        // Autumn break
+        holidays.push({
+            start: new Date(year, 9, 27),
+            end: new Date(year, 9, 31),
+            name: 'Herbstferien',
+            nameEn: 'Autumn Break'
+        });
+
+        // Christmas break
+        holidays.push({
+            start: new Date(year, 11, 24),
+            end: new Date(year + 1, 0, 6),
+            name: 'Weihnachtsferien',
+            nameEn: 'Christmas Break'
+        });
+
+        return holidays.sort((a, b) => a.start - b.start);
+    }
+
+    // Render functions
+    function renderPublicHolidays(year) {
+        const holidays = getPublicHolidays(year);
+        const container = document.getElementById('public-holidays');
+        document.getElementById('public-year').textContent = year;
+
+        container.innerHTML = holidays.map(h => `
+            <div class="holiday-card">
+                <h3>${h.name}</h3>
+                <div class="date">${formatDate(h.date)}</div>
+                <div class="subtitle">${h.nameEn}</div>
+            </div>
+        `).join('');
+    }
+
+    function renderSchoolHolidays(year, bundesland) {
+        const holidays = getSchoolHolidays(year, bundesland);
+        const container = document.getElementById('school-holidays');
+        document.getElementById('school-year').textContent = year;
+        document.getElementById('school-bundesland').textContent = bundesland;
+
+        container.innerHTML = holidays.map(h => {
+            const days = getDaysBetween(h.start, h.end);
+            const isSingleDay = h.start.getTime() === h.end.getTime();
+
+            return `
                 <div class="holiday-card">
                     <h3>${h.name}</h3>
-                    <div class="date">${formatDate(h.date)}</div>
+                    <div class="date">${formatDate(h.start)}</div>
+                    ${!isSingleDay ? `<div class="subtitle">bis ${formatDate(h.end)}</div>` : ''}
                     <div class="subtitle">${h.nameEn}</div>
+                    <div class="duration">${days} Tag${days > 1 ? 'e' : ''}</div>
                 </div>
-            `).join('');
+            `;
+        }).join('');
+    }
+
+    // Tab switching
+    function switchTab(tabName) {
+        // Remove active class from all tabs
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+        // Add active class to selected tab
+        event.target.classList.add('active');
+        document.getElementById(tabName + '-tab').classList.add('active');
+    }
+
+    // Update calendar
+    function updateCalendar() {
+        const year = parseInt(document.getElementById('yearSelect').value);
+        const bundesland = document.getElementById('bundeslandSelect').value;
+
+        renderPublicHolidays(year);
+        renderSchoolHolidays(year, bundesland);
+    }
+
+    // Initialize
+    function init() {
+        const currentYear = new Date().getFullYear();
+        const yearSelect = document.getElementById('yearSelect');
+
+        // Populate year dropdown (current year - 1 to + 5)
+        for (let year = currentYear - 1; year <= currentYear + 5; year++) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            if (year === currentYear) option.selected = true;
+            yearSelect.appendChild(option);
         }
 
-        function renderSchoolHolidays(year, bundesland) {
-            const holidays = getSchoolHolidays(year, bundesland);
-            const container = document.getElementById('school-holidays');
-            document.getElementById('school-year').textContent = year;
-            document.getElementById('school-bundesland').textContent = bundesland;
+        // Initial render
+        updateCalendar();
+    }
 
-            container.innerHTML = holidays.map(h => {
-                const days = getDaysBetween(h.start, h.end);
-                const isSingleDay = h.start.getTime() === h.end.getTime();
-
-                return `
-                    <div class="holiday-card">
-                        <h3>${h.name}</h3>
-                        <div class="date">${formatDate(h.start)}</div>
-                        ${!isSingleDay ? `<div class="subtitle">bis ${formatDate(h.end)}</div>` : ''}
-                        <div class="subtitle">${h.nameEn}</div>
-                        <div class="duration">${days} Tag${days > 1 ? 'e' : ''}</div>
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        // Tab switching
-        function switchTab(tabName) {
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            // Add active class to selected tab
-            event.target.classList.add('active');
-            document.getElementById(tabName + '-tab').classList.add('active');
-        }
-        
-        // Update calendar
-        function updateCalendar() {
-            const year = parseInt(document.getElementById('yearSelect').value);
-            const bundesland = document.getElementById('bundeslandSelect').value;
-            
-            renderPublicHolidays(year);
-            renderSchoolHolidays(year, bundesland);
-        }
-        
-        // Initialize
-        function init() {
-            const currentYear = new Date().getFullYear();
-            const yearSelect = document.getElementById('yearSelect');
-            
-            // Populate year dropdown (current year - 1 to + 5)
-            for (let year = currentYear - 1; year <= currentYear + 5; year++) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                if (year === currentYear) option.selected = true;
-                yearSelect.appendChild(option);
-            }
-            
-            // Initial render
-            updateCalendar();
-        }
-        
-        // Run on page load
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
+    // Run on page load
+    document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>

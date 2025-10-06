@@ -359,7 +359,12 @@ def generate_school_holiday_ics(bundesland, start_year, end_year, output_dir="ou
     ics_lines.append("END:VCALENDAR")
 
     # Write to file
-    filename = f"{output_dir}/school_holidays_{bundesland.lower().replace('ö', 'oe').replace('ü', 'ue')}.ics"
+    # Convert umlauts for filename
+    bundesland_filename = (bundesland.lower()
+                           .replace('ä', 'ae')
+                           .replace('ö', 'oe')
+                           .replace('ü', 'ue'))
+    filename = f"{output_dir}/school_holidays_{bundesland_filename}.ics"
     with open(filename, 'w', encoding='utf-8') as f:
         f.write('\r\n'.join(ics_lines))
 
