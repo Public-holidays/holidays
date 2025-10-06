@@ -332,7 +332,8 @@ def generate_school_holiday_ics(bundesland, start_year, end_year, output_dir="ou
         "METHOD:PUBLISH",
         f"X-WR-CALNAME:Schulferien {bundesland}",
         "X-WR-TIMEZONE:Europe/Vienna",
-        f"X-WR-CALDESC:Schulferien in {bundesland}, Österreich ({start_year}-{end_year + 1})"
+        f"X-WR-CALDESC:Schulferien in {bundesland}, Österreich ({start_year}-{end_year + 1})",
+        f"X-GENERATION-TIME:{datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')}"
     ]
 
     for start_date, end_date, name_de, name_en in all_holidays:
