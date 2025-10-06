@@ -8,11 +8,38 @@ Based on Austrian school law (Schulzeitgesetz)
 from datetime import datetime, timedelta
 import os
 
+def get_easter_date(year):
+    """Calculate Easter Sunday using Gauss's algorithm"""
+    a = year % 19
+    b = year % 4
+    c = year % 7
+    k = year // 100
+    p = (13 + 8 * k) // 25
+    q = k // 4
+    M = (15 - p + k - q) % 30
+    N = (4 + k - q) % 7
+    d = (19 * a + M) % 30
+    e = (2 * b + 4 * c + 6 * d + N) % 7
+    
+    if d + e < 10:
+        day = d + e + 22
+        month = 3
+    else:
+        day = d + e - 9
+        month = 4
+    
+    if day == 26 and month == 4:
+        day = 19
+    if day == 25 and month == 4 and d == 28 and e == 6 and a > 10:
+        day = 18
+    
+    return datetime(year, month, day)
+
 def get_first_monday_of_month(year, month):
     """Get the first Monday of a given month"""
     first_day = datetime(year, month, 1)
     days_until_monday = (7 - first_day.weekday()) % 7
-    if first_day.weekday() == 0:  # If first day is already Monday
+    if first_day.weekday() == 0:
         return first_day
     return first_day + timedelta(days=days_until_monday)
 
@@ -28,9 +55,8 @@ def get_first_saturday_in_range(year, month, start_day, end_day):
     """
     start_date = datetime(year, month, start_day)
     
-    # Find the first Saturday from start_date
     days_until_saturday = (5 - start_date.weekday()) % 7
-    if start_date.weekday() == 5:  # Already Saturday
+    if start_date.weekday() == 5:
         return start_date
     return start_date + timedelta(days=days_until_saturday)
 
@@ -43,18 +69,27 @@ def calculate_school_year_start(year, bundesland):
     group_1 = ['Burgenland', 'Niederösterreich', 'Wien']
     
     if bundesland in group_1:
-        return get_nth_monday_of_month(year, 9, 1)  # First Monday
+        return get_nth_monday_of_month(year, 9, 1)
     else:
-        return get_nth_monday_of_month(year, 9, 2)  # Second Monday
+        return get_nth_monday_of_month(year, 9, 2)
+
+def calculate_christmas_break(year):
+    """
+    Calculate Christmas break (Weihnachtsferien)
+    § 2 (4) 3.: December 24 to January 6 (inclusive)
+    """
+    start = datetime(year, 12, 24)
+    end = datetime(year + 1, 1, 6)
+    return start, end
 
 def calculate_semester_break(year, bundesland):
     """
-    Calculate semester break for a given Bundesland
-    § 2 (2) 1. b): 
+    Calculate semester break (Semesterferien)
+    § 2 (2) 1. b) and § 2 (4) 5.: 
     - Niederösterreich, Wien: first Monday in February
     - Burgenland, Kärnten, Salzburg, Tirol, Vorarlberg: second Monday in February
     - Oberösterreich, Steiermark: third Monday in February
-    Duration: 1 week
+    Duration: Monday to Saturday (one week)
     """
     group_1 = ['Niederösterreich', 'Wien']
     group_2 = ['Burgenland', 'Kärnten', 'Salzburg', 'Tirol', 'Vorarlberg']
@@ -69,7 +104,51 @@ def calculate_semester_break(year, bundesland):
     else:
         raise ValueError(f"Unknown Bundesland: {bundesland}")
     
-    end = start + timedelta(days=6)  # One week (Monday to Sunday)
+    # Monday to Saturday (6 days)
+    end = start + timedelta(days=5)
+    return start, end
+
+def calculate_easter_break(year):
+    """
+    Calculate Easter break (Osterferien)
+    § 2 (4) 6.: Saturday before Palm Sunday to Easter Monday (inclusive)
+    Palm Sunday is one week before Easter Sunday
+    """
+    easter = get_easter_date(year)
+    palm_sunday = easter - timedelta(days=7)
+    
+    # Saturday before Palm Sunday
+    saturday_before = palm_sunday - timedelta(days=1)
+    
+    # Easter Monday
+    easter_monday = easter + timedelta(days=1)
+    
+    return saturday_before, easter_monday
+
+def calculate_whit_break(year):
+    """
+    Calculate Whit/Pentecost break (Pfingstferien)
+    § 2 (4) 7.: Saturday before Whit Sunday to Whit Monday (inclusive)
+    Whit Sunday is 49 days after Easter
+    """
+    easter = get_easter_date(year)
+    whit_sunday = easter + timedelta(days=49)
+    
+    # Saturday before Whit Sunday
+    saturday_before = whit_sunday - timedelta(days=1)
+    
+    # Whit Monday
+    whit_monday = whit_sunday + timedelta(days=1)
+    
+    return saturday_before, whit_monday
+
+def calculate_autumn_break(year):
+    """
+    Calculate autumn break (Herbstferien)
+    § 2 (4) 8.: October 27 to October 31 (inclusive)
+    """
+    start = datetime(year, 10, 27)
+    end = datetime(year, 10, 31)
     return start, end
 
 def calculate_summer_holidays(year, bundesland):
@@ -83,13 +162,10 @@ def calculate_summer_holidays(year, bundesland):
     group_1 = ['Burgenland', 'Niederösterreich', 'Wien']
     
     if bundesland in group_1:
-        # First Saturday between June 28 and July 4
         start = get_first_saturday_in_range(year, 6, 28, 4)
         if start.month == 7 and start.day > 4:
-            # Fallback: find Saturday in June 28-30 range
             start = get_first_saturday_in_range(year, 6, 28, 30)
     else:
-        # First Saturday between July 5 and July 11
         start = get_first_saturday_in_range(year, 7, 5, 11)
     
     # End date is the day before next school year starts
@@ -102,10 +178,12 @@ def get_school_holidays(year, bundesland):
     """
     Get all school holidays for a given year and Bundesland
     Returns list of (start_date, end_date, name_de, name_en)
+    
+    Note: Christmas break spans two years, so it appears in the year it starts
     """
     holidays = []
     
-    # Semester break
+    # Semester break (February)
     sem_start, sem_end = calculate_semester_break(year, bundesland)
     holidays.append((
         sem_start,
@@ -114,13 +192,50 @@ def get_school_holidays(year, bundesland):
         "Semester Break"
     ))
     
-    # Summer holidays
+    # Easter break (March/April)
+    easter_start, easter_end = calculate_easter_break(year)
+    holidays.append((
+        easter_start,
+        easter_end,
+        "Osterferien",
+        "Easter Break"
+    ))
+    
+    # Whit/Pentecost break (May/June)
+    whit_start, whit_end = calculate_whit_break(year)
+    holidays.append((
+        whit_start,
+        whit_end,
+        "Pfingstferien",
+        "Whit Break"
+    ))
+    
+    # Summer holidays (July-September)
     summer_start, summer_end = calculate_summer_holidays(year, bundesland)
     holidays.append((
         summer_start,
         summer_end,
         "Sommerferien",
         "Summer Holidays"
+    ))
+    
+    # Autumn break (October)
+    autumn_start, autumn_end = calculate_autumn_break(year)
+    holidays.append((
+        autumn_start,
+        autumn_end,
+        "Herbstferien",
+        "Autumn Break"
+    ))
+    
+    # Christmas break (December-January)
+    # Only include if we're not in the last year (since it spans into next year)
+    christmas_start, christmas_end = calculate_christmas_break(year)
+    holidays.append((
+        christmas_start,
+        christmas_end,
+        "Weihnachtsferien",
+        "Christmas Break"
     ))
     
     return holidays
@@ -148,7 +263,7 @@ def generate_school_holiday_ics(bundesland, start_year, end_year, output_dir="ou
         "METHOD:PUBLISH",
         f"X-WR-CALNAME:Schulferien {bundesland}",
         "X-WR-TIMEZONE:Europe/Vienna",
-        f"X-WR-CALDESC:Schulferien in {bundesland}, Österreich ({start_year}-{end_year})"
+        f"X-WR-CALDESC:Schulferien in {bundesland}, Österreich ({start_year}-{end_year + 1})"
     ]
     
     for start_date, end_date, name_de, name_en in all_holidays:
@@ -197,7 +312,7 @@ def generate_all_bundeslaender(start_year, end_year):
     ]
     
     print("="*60)
-    print(f"Austrian School Holidays Generator ({start_year}-{end_year})")
+    print(f"Austrian School Holidays Generator ({start_year}-{end_year + 1})")
     print("="*60)
     print()
     
@@ -217,7 +332,7 @@ if __name__ == "__main__":
     # Print example for verification
     print()
     print("="*60)
-    print(f"Example: Wien School Holidays {current_year}")
+    print(f"Example: Wien School Holidays {current_year}/{current_year + 1}")
     print("="*60)
     for start_date, end_date, name_de, name_en in get_school_holidays(current_year, 'Wien'):
         duration = (end_date - start_date).days + 1

@@ -89,16 +89,39 @@ Includes semester breaks and summer holidays for each state (current year + next
 
 School holiday dates are calculated according to the Austrian **Schulzeitgesetz § 2**.
 
-### Semester Breaks (Semesterferien)
-One week in February, varying by Bundesland:
+Each calendar includes all official school breaks:
+
+### 1. Semesterferien (Semester Break)
+One week in February (Monday-Saturday), varying by Bundesland:
 - **Niederösterreich, Wien**: 1st Monday in February
 - **Burgenland, Kärnten, Salzburg, Tirol, Vorarlberg**: 2nd Monday in February
 - **Oberösterreich, Steiermark**: 3rd Monday in February
 
-### Summer Holidays (Sommerferien)
+### 2. Osterferien (Easter Break)
+Saturday before Palm Sunday to Easter Monday (inclusive)
+- Duration: ~10 days
+- Dates vary each year based on Easter
+
+### 3. Pfingstferien (Whit/Pentecost Break)
+Saturday before Whit Sunday to Whit Monday (inclusive)
+- Duration: 4 days
+- Dates vary each year (7 weeks after Easter)
+
+### 4. Sommerferien (Summer Holidays)
 Approximately 9 weeks, starting on a Saturday:
 - **Burgenland, Niederösterreich, Wien**: Saturday between June 28 - July 4
 - **Kärnten, Oberösterreich, Salzburg, Steiermark, Tirol, Vorarlberg**: Saturday between July 5 - July 11
+- Ends the day before school year starts in September
+
+### 5. Herbstferien (Autumn Break)
+October 27 to October 31 (inclusive)
+- Duration: 5 days
+- Same dates for all Bundesländer
+
+### 6. Weihnachtsferien (Christmas Break)
+December 24 to January 6 (inclusive)
+- Duration: 2 weeks
+- Same dates for all Bundesländer
 
 ---
 
