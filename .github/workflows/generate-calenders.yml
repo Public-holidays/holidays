@@ -1,0 +1,36 @@
+name: Generate Holiday Calendars
+
+on:
+  schedule:
+    # Run monthly on the 1st at 00:00 UTC
+    - cron: '0 0 1 * *'
+  workflow_dispatch:  # Allows manual trigger
+  push:
+    branches: [ main ]
+    paths:
+      - 'scripts/generate_holidays.py'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Generate calendar files
+      run: |
+        cd scripts
+        python generate_holidays.py
+        
+    - name: Commit and push if changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add -A
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update holiday calendars [automated]" && git push)
