@@ -295,13 +295,13 @@
             <div class="control-group">
                 <div class="control-item">
                     <label>Jahr</label>
-                    <select id="yearSelect">
+                    <select id="yearSelect" onchange="updateCalendar()">
                         <!-- Populated by JS -->
                     </select>
                 </div>
                 <div class="control-item">
                     <label>Bundesland (für Schulferien)</label>
-                    <select id="bundeslandSelect">
+                    <select id="bundeslandSelect" onchange="updateCalendar()">
                         <option value="Wien">Wien</option>
                         <option value="Niederösterreich">Niederösterreich</option>
                         <option value="Burgenland">Burgenland</option>
@@ -313,37 +313,33 @@
                         <option value="Vorarlberg">Vorarlberg</option>
                     </select>
                 </div>
-                <div class="control-item">
-                    <label>&nbsp;</label>
-                    <button onclick="updateCalendar()">Aktualisieren</button>
-                </div>
             </div>
         </div>
-        
+
         <div class="content">
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('public')">Gesetzliche Feiertage</button>
                 <button class="tab" onclick="switchTab('school')">Schulferien</button>
                 <button class="tab" onclick="switchTab('download')">Kalender herunterladen</button>
             </div>
-            
+
             <div id="public-tab" class="tab-content active">
                 <h2>📅 Gesetzliche Feiertage <span id="public-year"></span></h2>
                 <div id="public-holidays" class="holiday-grid">
                     <div class="loading">Lade Feiertage...</div>
                 </div>
             </div>
-            
+
             <div id="school-tab" class="tab-content">
                 <h2>🎒 Schulferien <span id="school-year"></span> - <span id="school-bundesland"></span></h2>
                 <div id="school-holidays" class="holiday-grid">
                     <div class="loading">Lade Schulferien...</div>
                 </div>
             </div>
-            
+
             <div id="download-tab" class="tab-content">
                 <h2>📥 ICS-Kalender herunterladen</h2>
-                
+
                 <div class="download-section">
                     <h3>Gesetzliche Feiertage</h3>
                     <p>Abonnieren Sie diese Kalender, um automatisch alle österreichischen Feiertage zu erhalten</p>
@@ -354,7 +350,7 @@
                         <a href="https://public-holidays.github.io/holidays/output/austrian_holidays_2027.ics" class="download-btn">2027</a>
                     </div>
                 </div>
-                
+
                 <div class="download-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <h3>Schulferien nach Bundesland</h3>
                     <p>Jeder Kalender enthält alle Schulferien, Landespatrontage und Semesterferien</p>
@@ -370,7 +366,7 @@
                         <a href="https://public-holidays.github.io/holidays/output/school/school_holidays_vorarlberg.ics" class="download-btn">Vorarlberg</a>
                     </div>
                 </div>
-                
+
                 <div class="info-box">
                     <h4>📖 So abonnieren Sie</h4>
                     <p><strong>Google Kalender:</strong> Klicken Sie auf + neben "Weitere Kalender" → Über URL → Link einfügen</p>
@@ -379,34 +375,11 @@
                 </div>
             </div>
         </div>
-        
+
         <footer>
             <p><strong>🇦🇹 Österreichische Feiertage & Schulferien</strong></p>
             <p>Berechnet in Echtzeit nach österreichischem Recht (Schulzeitgesetz)</p>
             <p style="margin-top: 10px;">Osterdaten nach dem Gauß'schen Algorithmus berechnet</p>
-            <footer>
-    <p><strong>🇦🇹 Österreichische Feiertage & Schulferien</strong></p>
-    <p>Berechnet in Echtzeit nach österreichischem Recht (Schulzeitgesetz)</p>
-    <p style="margin-top: 10px;">Osterdaten nach dem Gauß'schen Algorithmus berechnet</p>
-
-    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
-        <h4 style="margin-bottom: 10px;">Impressum</h4>
-        <p><strong>Informationspflicht gemäß § 5 E-Commerce Gesetz und § 25 Mediengesetz:</strong></p>
-        <p>
-            Reinhold Degenfellner<br>
-            Puchenau<br>
-            Österreich
-        </p>
-        <p style="margin-top: 10px;">
-            E-Mail: rdegenfellner-holidays@gmail.com
-        </p>
-        <p style="margin-top: 15px; font-size: 0.9em;">
-            <strong>Haftungsausschluss:</strong> Alle Angaben ohne Gewähr. Die Daten werden nach bestem Wissen
-            und Gewissen berechnet, jedoch wird keine Haftung für die Richtigkeit übernommen.
-            Bitte prüfen Sie wichtige Termine zusätzlich bei offiziellen Stellen.
-        </p>
-    </div>
-</footer>
         </footer>
     </div>
 
@@ -423,7 +396,7 @@
             const N = (4 + k - q) % 7;
             const d = (19 * a + M) % 30;
             const e = (2 * b + 4 * c + 6 * d + N) % 7;
-            
+
             let day, month;
             if (d + e < 10) {
                 day = d + e + 22;
@@ -432,37 +405,37 @@
                 day = d + e - 9;
                 month = 4;
             }
-            
+
             if (day === 26 && month === 4) day = 19;
             if (day === 25 && month === 4 && d === 28 && e === 6 && a > 10) day = 18;
-            
+
             return new Date(year, month - 1, day);
         }
-        
+
         // Helper functions
         function addDays(date, days) {
             const result = new Date(date);
             result.setDate(result.getDate() + days);
             return result;
         }
-        
+
         function formatDate(date) {
             const days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
-            const months = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 
+            const months = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni',
                           'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
             return `${days[date.getDay()]}, ${date.getDate()}. ${months[date.getMonth()]} ${date.getFullYear()}`;
         }
-        
+
         function formatDateShort(date) {
             return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
         }
-        
+
         function getDaysBetween(start, end) {
             const diffTime = Math.abs(end - start);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             return diffDays + 1; // Include both start and end day
         }
-        
+
         // Get nth weekday of month (e.g., 2nd Monday)
         function getNthWeekdayOfMonth(year, month, weekday, n) {
             const firstDay = new Date(year, month - 1, 1);
@@ -472,7 +445,7 @@
             const nthOccurrence = firstOccurrence + (n - 1) * 7;
             return new Date(year, month - 1, nthOccurrence);
         }
-        
+
         // Get first Saturday in date range
         function getFirstSaturdayInRange(year, month, startDay) {
             let date = new Date(year, month - 1, startDay);
@@ -481,11 +454,11 @@
             }
             return date;
         }
-        
+
         // Public Holidays
         function getPublicHolidays(year) {
             const easter = calculateEaster(year);
-            
+
             return [
                 { date: new Date(year, 0, 1), name: 'Neujahr', nameEn: 'New Year\'s Day' },
                 { date: new Date(year, 0, 6), name: 'Heilige Drei Könige', nameEn: 'Epiphany' },
@@ -502,12 +475,12 @@
                 { date: new Date(year, 11, 26), name: 'Stefanitag', nameEn: 'St. Stephen\'s Day' }
             ].sort((a, b) => a.date - b.date);
         }
-        
+
         // School Holidays
         function getSchoolHolidays(year, bundesland) {
             const holidays = [];
             const easter = calculateEaster(year);
-            
+
             // Landespatron days
             const patronDays = {
                 'Kärnten': { date: new Date(year, 2, 19), name: 'Hl. Josef', nameEn: 'St. Joseph' },
@@ -520,7 +493,7 @@
                 'Wien': { date: new Date(year, 10, 15), name: 'Hl. Leopold', nameEn: 'St. Leopold' },
                 'Niederösterreich': { date: new Date(year, 10, 15), name: 'Hl. Leopold', nameEn: 'St. Leopold' }
             };
-            
+
             if (patronDays[bundesland]) {
                 holidays.push({
                     start: patronDays[bundesland].date,
@@ -529,7 +502,7 @@
                     nameEn: patronDays[bundesland].nameEn
                 });
             }
-            
+
             // Kärnten additional day
             if (bundesland === 'Kärnten') {
                 holidays.push({
@@ -539,14 +512,14 @@
                     nameEn: 'Carinthian Plebiscite Day'
                 });
             }
-            
+
             // Semester break
             const semesterGroups = {
                 'group1': ['Niederösterreich', 'Wien'],
                 'group2': ['Burgenland', 'Kärnten', 'Salzburg', 'Tirol', 'Vorarlberg'],
                 'group3': ['Oberösterreich', 'Steiermark']
             };
-            
+
             let semesterStart;
             if (semesterGroups.group1.includes(bundesland)) {
                 semesterStart = getNthWeekdayOfMonth(year, 2, 1, 1); // 1st Monday
@@ -555,61 +528,61 @@
             } else {
                 semesterStart = getNthWeekdayOfMonth(year, 2, 1, 3); // 3rd Monday
             }
-            
+
             holidays.push({
                 start: semesterStart,
                 end: addDays(semesterStart, 5),
                 name: 'Semesterferien',
                 nameEn: 'Semester Break'
             });
-            
+
             // Easter break
             const palmSunday = addDays(easter, -7);
             const saturdayBeforePalm = addDays(palmSunday, -1);
             const easterMonday = addDays(easter, 1);
-            
+
             holidays.push({
                 start: saturdayBeforePalm,
                 end: easterMonday,
                 name: 'Osterferien',
                 nameEn: 'Easter Break'
             });
-            
+
             // Whit break
             const whitSunday = addDays(easter, 49);
             const saturdayBeforeWhit = addDays(whitSunday, -1);
             const whitMonday = addDays(whitSunday, 1);
-            
+
             holidays.push({
                 start: saturdayBeforeWhit,
                 end: whitMonday,
                 name: 'Pfingstferien',
                 nameEn: 'Whit Break'
             });
-            
+
             // Summer holidays
             const summerGroup1 = ['Burgenland', 'Niederösterreich', 'Wien'];
             let summerStart;
-            
+
             if (summerGroup1.includes(bundesland)) {
                 summerStart = getFirstSaturdayInRange(year, 6, 28);
             } else {
                 summerStart = getFirstSaturdayInRange(year, 7, 5);
             }
-            
+
             // School year starts in September
-            const schoolYearStart = summerGroup1.includes(bundesland) 
+            const schoolYearStart = summerGroup1.includes(bundesland)
                 ? getNthWeekdayOfMonth(year, 9, 1, 1)  // 1st Monday
                 : getNthWeekdayOfMonth(year, 9, 1, 2); // 2nd Monday
             const summerEnd = addDays(schoolYearStart, -1);
-            
+
             holidays.push({
                 start: summerStart,
                 end: summerEnd,
                 name: 'Sommerferien',
                 nameEn: 'Summer Holidays'
             });
-            
+
             // Autumn break
             holidays.push({
                 start: new Date(year, 9, 27),
@@ -617,7 +590,7 @@
                 name: 'Herbstferien',
                 nameEn: 'Autumn Break'
             });
-            
+
             // Christmas break
             holidays.push({
                 start: new Date(year, 11, 24),
@@ -625,16 +598,16 @@
                 name: 'Weihnachtsferien',
                 nameEn: 'Christmas Break'
             });
-            
+
             return holidays.sort((a, b) => a.start - b.start);
         }
-        
+
         // Render functions
         function renderPublicHolidays(year) {
             const holidays = getPublicHolidays(year);
             const container = document.getElementById('public-holidays');
             document.getElementById('public-year').textContent = year;
-            
+
             container.innerHTML = holidays.map(h => `
                 <div class="holiday-card">
                     <h3>${h.name}</h3>
@@ -643,24 +616,24 @@
                 </div>
             `).join('');
         }
-        
+
         function renderSchoolHolidays(year, bundesland) {
             const holidays = getSchoolHolidays(year, bundesland);
             const container = document.getElementById('school-holidays');
             document.getElementById('school-year').textContent = year;
             document.getElementById('school-bundesland').textContent = bundesland;
-            
+
             container.innerHTML = holidays.map(h => {
                 const days = getDaysBetween(h.start, h.end);
                 const isSingleDay = h.start.getTime() === h.end.getTime();
-                
+
                 return `
                     <div class="holiday-card">
                         <h3>${h.name}</h3>
                         <div class="date">${formatDate(h.start)}</div>
-                        ${!isSingleDay ? `<div class="subtitle">to ${formatDate(h.end)}</div>` : ''}
+                        ${!isSingleDay ? `<div class="subtitle">bis ${formatDate(h.end)}</div>` : ''}
                         <div class="subtitle">${h.nameEn}</div>
-                        <div class="duration">${days} day${days > 1 ? 's' : ''}</div>
+                        <div class="duration">${days} Tag${days > 1 ? 'e' : ''}</div>
                     </div>
                 `;
             }).join('');
