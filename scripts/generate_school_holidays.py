@@ -174,6 +174,36 @@ def calculate_summer_holidays(year, bundesland):
     
     return start, end
 
+def get_landespatron_day(year, bundesland):
+    """
+    Get the Landespatron (patron saint) day for a Bundesland
+    § 2 (4) 2.: School-free on the day of the Landespatron
+    Returns (date, name_de, name_en) or None if no patron day
+    """
+    landespatron_days = {
+        'Kärnten': (datetime(year, 3, 19), "Hl. Josef", "St. Joseph"),
+        'Steiermark': (datetime(year, 3, 19), "Hl. Josef", "St. Joseph"),
+        'Tirol': (datetime(year, 3, 19), "Hl. Josef", "St. Joseph"),
+        'Vorarlberg': (datetime(year, 3, 19), "Hl. Josef", "St. Joseph"),
+        'Oberösterreich': (datetime(year, 5, 4), "Hl. Florian", "St. Florian"),
+        'Salzburg': (datetime(year, 9, 24), "Hl. Rupert", "St. Rupert"),
+        'Burgenland': (datetime(year, 11, 11), "Hl. Martin", "St. Martin"),
+        'Wien': (datetime(year, 11, 15), "Hl. Leopold", "St. Leopold"),
+        'Niederösterreich': (datetime(year, 11, 15), "Hl. Leopold", "St. Leopold"),
+    }
+    
+    return landespatron_days.get(bundesland)
+
+def get_landesfeiertag(year, bundesland):
+    """
+    Get additional Landesfeiertag (state holiday) if applicable
+    Kärnten has an additional day: Tag der Volksabstimmung (October 10)
+    Returns (date, name_de, name_en) or None
+    """
+    if bundesland == 'Kärnten':
+        return (datetime(year, 10, 10), "Tag der Volksabstimmung", "Carinthian Plebiscite Day")
+    return None
+
 def get_school_holidays(year, bundesland):
     """
     Get all school holidays for a given year and Bundesland
@@ -182,6 +212,28 @@ def get_school_holidays(year, bundesland):
     Note: Christmas break spans two years, so it appears in the year it starts
     """
     holidays = []
+    
+    # Landespatron day (single day, varies by Bundesland)
+    landespatron = get_landespatron_day(year, bundesland)
+    if landespatron:
+        date, name_de, name_en = landespatron
+        holidays.append((
+            date,
+            date,
+            name_de,
+            name_en
+        ))
+    
+    # Additional Landesfeiertag (Kärnten only)
+    landesfeiertag = get_landesfeiertag(year, bundesland)
+    if landesfeiertag:
+        date, name_de, name_en = landesfeiertag
+        holidays.append((
+            date,
+            date,
+            name_de,
+            name_en
+        ))
     
     # Semester break (February)
     sem_start, sem_end = calculate_semester_break(year, bundesland)
@@ -229,7 +281,6 @@ def get_school_holidays(year, bundesland):
     ))
     
     # Christmas break (December-January)
-    # Only include if we're not in the last year (since it spans into next year)
     christmas_start, christmas_end = calculate_christmas_break(year)
     holidays.append((
         christmas_start,

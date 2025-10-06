@@ -91,6 +91,15 @@ School holiday dates are calculated according to the Austrian **Schulzeitgesetz 
 
 Each calendar includes all official school breaks:
 
+### 0. Landespatron (Patron Saint Days)
+Single school-free days specific to each Bundesland:
+- **Kärnten, Steiermark, Tirol, Vorarlberg**: St. Josef (March 19)
+- **Oberösterreich**: St. Florian (May 4)
+- **Salzburg**: St. Rupert (September 24)
+- **Kärnten** (additional): Tag der Volksabstimmung (October 10)
+- **Burgenland**: St. Martin (November 11)
+- **Wien, Niederösterreich**: St. Leopold (November 15)
+
 ### 1. Semesterferien (Semester Break)
 One week in February (Monday-Saturday), varying by Bundesland:
 - **Niederösterreich, Wien**: 1st Monday in February
