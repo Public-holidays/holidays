@@ -91,6 +91,7 @@ def generate_ics(year, output_dir="output"):
         "X-WR-CALNAME:Österreichische Feiertage",
         "X-WR-TIMEZONE:Europe/Vienna",
         "X-WR-CALDESC:Gesetzliche Feiertage in Österreich"
+        f"X-GENERATION-TIME:{datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')}"
     ]
 
     for date, name_de, name_en in holidays:
