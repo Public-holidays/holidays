@@ -34,25 +34,51 @@
             color: white;
             padding: 60px 40px;
             text-align: center;
+            position: relative;
         }
-        
+
+        .support-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .support-badge:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
         header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
             font-weight: 700;
         }
-        
+
         header p {
             font-size: 1.2em;
             opacity: 0.9;
         }
-        
+
         .controls {
             background: #f8f9fa;
             padding: 30px;
             border-bottom: 2px solid #e9ecef;
         }
-        
+
         .control-group {
             display: flex;
             gap: 20px;
@@ -60,19 +86,19 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .control-item {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
-        
+
         .control-item label {
             font-weight: 600;
             color: #495057;
             font-size: 0.9em;
         }
-        
+
         select, button {
             padding: 10px 20px;
             border-radius: 8px;
@@ -82,35 +108,35 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
+
         select:focus, button:focus {
             outline: none;
             border-color: #667eea;
         }
-        
+
         button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             font-weight: 600;
         }
-        
+
         button:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-        
+
         .content {
             padding: 40px;
         }
-        
+
         .tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 30px;
             border-bottom: 2px solid #e9ecef;
         }
-        
+
         .tab {
             padding: 15px 30px;
             background: none;
@@ -122,26 +148,26 @@
             color: #6c757d;
             transition: all 0.3s;
         }
-        
+
         .tab:hover {
             color: #495057;
             transform: none;
             box-shadow: none;
         }
-        
+
         .tab.active {
             color: #ed213a;
             border-bottom-color: #ed213a;
         }
-        
+
         .tab-content {
             display: none;
         }
-        
+
         .tab-content.active {
             display: block;
         }
-        
+
         h2 {
             color: #ed213a;
             font-size: 2em;
@@ -149,14 +175,14 @@
             padding-bottom: 10px;
             border-bottom: 3px solid #ed213a;
         }
-        
+
         .holiday-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             margin: 30px 0;
         }
-        
+
         .holiday-card {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             padding: 20px;
@@ -164,30 +190,30 @@
             border-left: 5px solid #ed213a;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        
+
         .holiday-card:hover {
             transform: translateX(5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        
+
         .holiday-card h3 {
             color: #ed213a;
             font-size: 1.3em;
             margin-bottom: 8px;
         }
-        
+
         .holiday-card .date {
             font-size: 1.1em;
             font-weight: 600;
             color: #495057;
             margin-bottom: 5px;
         }
-        
+
         .holiday-card .subtitle {
             color: #6c757d;
             font-size: 0.9em;
         }
-        
+
         .holiday-card .duration {
             background: #667eea;
             color: white;
@@ -197,7 +223,7 @@
             display: inline-block;
             margin-top: 8px;
         }
-        
+
         .download-section {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             padding: 30px;
@@ -205,20 +231,20 @@
             margin: 30px 0;
             color: white;
         }
-        
+
         .download-section h3 {
             color: white;
             margin-top: 0;
             margin-bottom: 15px;
         }
-        
+
         .download-links {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             margin-top: 15px;
         }
-        
+
         .download-btn {
             background: white;
             color: #f5576c;
@@ -229,11 +255,11 @@
             transition: transform 0.2s;
             display: inline-block;
         }
-        
+
         .download-btn:hover {
             transform: scale(1.05);
         }
-        
+
         .info-box {
             background: #e7f3ff;
             border-left: 4px solid #2196F3;
@@ -241,43 +267,43 @@
             border-radius: 8px;
             margin: 20px 0;
         }
-        
+
         .info-box h4 {
             color: #1976D2;
             margin-bottom: 10px;
         }
-        
+
         footer {
             background: #2d3748;
             color: white;
             padding: 30px;
             text-align: center;
         }
-        
+
         footer p {
             opacity: 0.8;
             margin: 5px 0;
         }
-        
+
         .loading {
             text-align: center;
             padding: 40px;
             color: #6c757d;
         }
-        
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.8em;
             }
-            
+
             .content {
                 padding: 20px;
             }
-            
+
             .control-group {
                 flex-direction: column;
             }
-            
+
             .tabs {
                 overflow-x: auto;
             }
@@ -287,6 +313,9 @@
 <body>
 <div class="container">
     <header>
+        <a href="https://ko-fi.com/reinhold" target="_blank" class="support-badge">
+            ☕ Unterstützen
+        </a>
         <h1>🇦🇹 Österreichische Feiertage</h1>
         <p>Interaktiver Kalender für gesetzliche Feiertage und Schulferien</p>
     </header>
@@ -392,12 +421,6 @@
     </div>
 
     <footer>
-        <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
-            Ist dieser Service hilfreich?
-            <a href="https://ko-fi.com/reinhold" target="_blank" style="color: white; text-decoration: underline;">
-                ☕ Unterstützen Sie das Projekt
-            </a>
-        </p>
         <p><strong>🇦🇹 Österreichische Feiertage & Schulferien</strong></p>
         <p>Berechnet in Echtzeit nach österreichischem Recht (Schulzeitgesetz)</p>
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
