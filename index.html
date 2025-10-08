@@ -11,7 +11,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
@@ -20,7 +20,7 @@
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -29,7 +29,7 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        
+
         header {
             background: linear-gradient(135deg, #ed213a 0%, #93291e 100%);
             color: white;
@@ -190,17 +190,62 @@
             border-radius: 12px;
             border-left: 5px solid #ed213a;
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: visible;
         }
 
         .holiday-card:hover {
             transform: translateX(5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 10;
         }
 
         .holiday-card h3 {
             color: #ed213a;
             font-size: 1.3em;
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: help;
+            flex-shrink: 0;
+        }
+
+        .info-icon:hover {
+            background: #5568d3;
+        }
+
+        .tooltip {
+            position: fixed;
+            background: #2d3748;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            line-height: 1.5;
+            z-index: 1000;
+            max-width: 300px;
+            width: max-content;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: none;
+            pointer-events: none;
+        }
+
+        .info-icon:hover + .tooltip {
+            display: block;
         }
 
         .holiday-card .date {
@@ -272,6 +317,11 @@
         .info-box h4 {
             color: #1976D2;
             margin-bottom: 10px;
+        }
+
+        .info-box a {
+            color: #1976D2;
+            font-weight: 600;
         }
 
         footer {
@@ -355,6 +405,10 @@
 
         <div id="public-tab" class="tab-content active">
             <h2>📅 Gesetzliche Feiertage <span id="public-year"></span></h2>
+            <div class="info-box">
+                <p>Gesetzliche Feiertage sind im <a href="https://www.jusline.at/gesetz/arg/paragraf/7" target="_blank"
+                                                    rel="noopener">§7 Arbeitsruhegesetz</a> geregelt.</p>
+            </div>
             <div id="public-holidays" class="holiday-grid">
                 <div class="loading">Lade Feiertage...</div>
             </div>
@@ -532,19 +586,19 @@
         const easter = calculateEaster(year);
 
         return [
-            { date: new Date(year, 0, 1), name: 'Neujahr', nameEn: 'New Year\'s Day' },
-            { date: new Date(year, 0, 6), name: 'Heilige Drei Könige', nameEn: 'Epiphany' },
-            { date: addDays(easter, 1), name: 'Ostermontag', nameEn: 'Easter Monday' },
-            { date: new Date(year, 4, 1), name: 'Staatsfeiertag', nameEn: 'Labour Day' },
-            { date: addDays(easter, 39), name: 'Christi Himmelfahrt', nameEn: 'Ascension Day' },
-            { date: addDays(easter, 50), name: 'Pfingstmontag', nameEn: 'Whit Monday' },
-            { date: addDays(easter, 60), name: 'Fronleichnam', nameEn: 'Corpus Christi' },
-            { date: new Date(year, 7, 15), name: 'Mariä Himmelfahrt', nameEn: 'Assumption of Mary' },
-            { date: new Date(year, 9, 26), name: 'Nationalfeiertag', nameEn: 'National Day' },
-            { date: new Date(year, 10, 1), name: 'Allerheiligen', nameEn: 'All Saints\' Day' },
-            { date: new Date(year, 11, 8), name: 'Mariä Empfängnis', nameEn: 'Immaculate Conception' },
-            { date: new Date(year, 11, 25), name: 'Christtag', nameEn: 'Christmas Day' },
-            { date: new Date(year, 11, 26), name: 'Stefanitag', nameEn: 'St. Stephen\'s Day' }
+            { date: new Date(year, 0, 1), name: 'Neujahr', nameEn: 'New Year\'s Day', info: 'Fixdatum, 1. Jänner' },
+            { date: new Date(year, 0, 6), name: 'Heilige Drei Könige', nameEn: 'Epiphany', info: 'Fixdatum, 6. Jänner' },
+            { date: addDays(easter, 1), name: 'Ostermontag', nameEn: 'Easter Monday', info: 'Beweglicher Feiertag, abhängig vom Ostersonntag (1. Sonntag nach dem ersten Vollmond im Frühling)' },
+            { date: new Date(year, 4, 1), name: 'Staatsfeiertag', nameEn: 'Labour Day', info: 'Fixdatum, 1. Mai' },
+            { date: addDays(easter, 39), name: 'Christi Himmelfahrt', nameEn: 'Ascension Day', info: 'Beweglicher Feiertag, 39 Tage nach Ostersonntag' },
+            { date: addDays(easter, 50), name: 'Pfingstmontag', nameEn: 'Whit Monday', info: 'Beweglicher Feiertag, 50 Tage nach Ostersonntag' },
+            { date: addDays(easter, 60), name: 'Fronleichnam', nameEn: 'Corpus Christi', info: 'Beweglicher Feiertag, 60 Tage nach Ostersonntag' },
+            { date: new Date(year, 7, 15), name: 'Mariä Himmelfahrt', nameEn: 'Assumption of Mary', info: 'Fixdatum, 15. August' },
+            { date: new Date(year, 9, 26), name: 'Nationalfeiertag', nameEn: 'National Day', info: 'Fixdatum, 26. Oktober - Gedenktag an die immerwährende Neutralität (1955)' },
+            { date: new Date(year, 10, 1), name: 'Allerheiligen', nameEn: 'All Saints\' Day', info: 'Fixdatum, 1. November' },
+            { date: new Date(year, 11, 8), name: 'Mariä Empfängnis', nameEn: 'Immaculate Conception', info: 'Fixdatum, 8. Dezember' },
+            { date: new Date(year, 11, 25), name: 'Christtag', nameEn: 'Christmas Day', info: 'Fixdatum, 25. Dezember' },
+            { date: new Date(year, 11, 26), name: 'Stefanitag', nameEn: 'St. Stephen\'s Day', info: 'Fixdatum, 26. Dezember' }
         ].sort((a, b) => a.date - b.date);
     }
 
@@ -680,13 +734,43 @@
         const container = document.getElementById('public-holidays');
         document.getElementById('public-year').textContent = year;
 
-        container.innerHTML = holidays.map(h => `
+        container.innerHTML = holidays.map((h, index) => `
             <div class="holiday-card">
-                <h3>${h.name}</h3>
+                <h3>
+                    ${h.name}
+                    <span class="info-icon" onmouseenter="showTooltip(event, '${h.info.replace(/'/g, "&#39;")}')" onmouseleave="hideTooltip()">i</span>
+                </h3>
                 <div class="date">${formatDate(h.date)}</div>
                 <div class="subtitle">${h.nameEn}</div>
             </div>
         `).join('');
+    }
+
+    // Tooltip positioning
+    let tooltipElement = null;
+
+    function showTooltip(event, text) {
+        hideTooltip(); // Remove any existing tooltip
+
+        tooltipElement = document.createElement('div');
+        tooltipElement.className = 'tooltip';
+        tooltipElement.style.display = 'block';
+        tooltipElement.textContent = text;
+        document.body.appendChild(tooltipElement);
+
+        // Position tooltip right next to the icon
+        const iconRect = event.target.getBoundingClientRect();
+
+        // Position directly to the right of the icon, aligned vertically
+        tooltipElement.style.left = (iconRect.right + 10) + 'px';
+        tooltipElement.style.top = iconRect.top + 'px';
+    }
+
+    function hideTooltip() {
+        if (tooltipElement) {
+            tooltipElement.remove();
+            tooltipElement = null;
+        }
     }
 
     function renderSchoolHolidays(year, bundesland) {
