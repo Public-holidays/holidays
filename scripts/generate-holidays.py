@@ -6,40 +6,7 @@ Generates ICS calendar files for Austrian national holidays
 
 from datetime import datetime, timedelta
 import os
-
-
-def calculate_easter(year):
-    """
-    Calculate Easter Sunday using Gauss's Easter algorithm
-    Returns datetime object for Easter Sunday
-    """
-    a = year % 19
-    b = year % 4
-    c = year % 7
-    k = year // 100
-    p = (13 + 8 * k) // 25
-    q = k // 4
-    M = (15 - p + k - q) % 30
-    N = (4 + k - q) % 7
-    d = (19 * a + M) % 30
-    e = (2 * b + 4 * c + 6 * d + N) % 7
-
-    # Easter Sunday
-    if d + e < 10:
-        day = d + e + 22
-        month = 3
-    else:
-        day = d + e - 9
-        month = 4
-
-    # Special exceptions
-    if day == 26 and month == 4:
-        day = 19
-    if day == 25 and month == 4 and d == 28 and e == 6 and a > 10:
-        day = 18
-
-    return datetime(year, month, day)
-
+from holiday_utils import calculate_easter, generate_ics_header, create_ics_event, write_ics_file
 
 def get_austrian_holidays(year):
     """
@@ -82,17 +49,7 @@ def generate_ics(year, output_dir="output"):
     os.makedirs(output_dir, exist_ok=True)
 
     # Generate ICS content
-    ics_lines = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//Austrian Holidays//AT",
-        "CALSCALE:GREGORIAN",
-        "METHOD:PUBLISH",
-        "X-WR-CALNAME:Österreichische Feiertage",
-        "X-WR-TIMEZONE:Europe/Vienna",
-        "X-WR-CALDESC:Gesetzliche Feiertage in Österreich"
-        f"X-GENERATION-TIME:{datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')}"
-    ]
+    ics_lines = generate_ics_header("Österreichische Feiertage", "Gesetzliche Feiertage in Österreich")
 
     for date, name_de, name_en in holidays:
         # Create unique ID
@@ -115,9 +72,9 @@ def generate_ics(year, output_dir="output"):
     ics_lines.append("END:VCALENDAR")
 
     # Write to file
+
     filename = f"{output_dir}/austrian_holidays_{year}.ics"
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write('\r\n'.join(ics_lines))
+    write_ics_file(filename, ics_lines)
 
     print(f"✓ Generated: {filename}")
     return filename
@@ -162,19 +119,7 @@ def generate_rolling_calendar(output_dir="output"):
         # Create unique ID
         uid = f"{date.strftime('%Y%m%d')}-{name_en.replace(' ', '-').lower()}@austrian-holidays.local"
 
-        ics_lines.extend([
-            "BEGIN:VEVENT",
-            f"DTSTART;VALUE=DATE:{date.strftime('%Y%m%d')}",
-            f"DTEND;VALUE=DATE:{(date + timedelta(days=1)).strftime('%Y%m%d')}",
-            f"DTSTAMP:{datetime.now().strftime('%Y%m%dT%H%M%SZ')}",
-            f"UID:{uid}",
-            f"SUMMARY:{name_de}",
-            f"DESCRIPTION:{name_en} - Gesetzlicher Feiertag in Österreich",
-            "TRANSP:TRANSPARENT",
-            "STATUS:CONFIRMED",
-            "SEQUENCE:0",
-            "END:VEVENT"
-        ])
+        ics_lines.extend(create_ics_event(date, date, name_de, f"{name_en} - Gesetzlicher Feiertag in Österreich", uid))
 
     ics_lines.append("END:VCALENDAR")
 

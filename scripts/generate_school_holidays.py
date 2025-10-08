@@ -7,35 +7,7 @@ Based on Austrian school law (Schulzeitgesetz)
 
 from datetime import datetime, timedelta
 import os
-
-
-def get_easter_date(year):
-    """Calculate Easter Sunday using Gauss's algorithm"""
-    a = year % 19
-    b = year % 4
-    c = year % 7
-    k = year // 100
-    p = (13 + 8 * k) // 25
-    q = k // 4
-    M = (15 - p + k - q) % 30
-    N = (4 + k - q) % 7
-    d = (19 * a + M) % 30
-    e = (2 * b + 4 * c + 6 * d + N) % 7
-
-    if d + e < 10:
-        day = d + e + 22
-        month = 3
-    else:
-        day = d + e - 9
-        month = 4
-
-    if day == 26 and month == 4:
-        day = 19
-    if day == 25 and month == 4 and d == 28 and e == 6 and a > 10:
-        day = 18
-
-    return datetime(year, month, day)
-
+from holiday_utils import calculate_easter, generate_ics_header, create_ics_event, write_ics_file
 
 def get_first_monday_of_month(year, month):
     """Get the first Monday of a given month"""
@@ -122,7 +94,7 @@ def calculate_easter_break(year):
     § 2 (4) 6.: Saturday before Palm Sunday to Easter Monday (inclusive)
     Palm Sunday is one week before Easter Sunday
     """
-    easter = get_easter_date(year)
+    easter = calculate_easter(year)
     palm_sunday = easter - timedelta(days=7)
 
     # Saturday before Palm Sunday
@@ -140,7 +112,7 @@ def calculate_whit_break(year):
     § 2 (4) 7.: Saturday before Whit Sunday to Whit Monday (inclusive)
     Whit Sunday is 49 days after Easter
     """
-    easter = get_easter_date(year)
+    easter = calculate_easter(year)
     whit_sunday = easter + timedelta(days=49)
 
     # Saturday before Whit Sunday
@@ -324,17 +296,7 @@ def generate_school_holiday_ics(bundesland, start_year, end_year, output_dir="ou
     all_holidays.sort(key=lambda x: x[0])
 
     # Generate ICS content
-    ics_lines = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//Austrian School Holidays//AT",
-        "CALSCALE:GREGORIAN",
-        "METHOD:PUBLISH",
-        f"X-WR-CALNAME:Schulferien {bundesland}",
-        "X-WR-TIMEZONE:Europe/Vienna",
-        f"X-WR-CALDESC:Schulferien in {bundesland}, Österreich ({start_year}-{end_year + 1})",
-        f"X-GENERATION-TIME:{datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')}"
-    ]
+    ics_lines = generate_ics_header(bundesland, f"Schulferien in {bundesland}, Österreich ({start_year}-{end_year + 1})")
 
     for start_date, end_date, name_de, name_en in all_holidays:
         # ICS events are inclusive, but DTEND is exclusive, so add 1 day
@@ -342,19 +304,7 @@ def generate_school_holiday_ics(bundesland, start_year, end_year, output_dir="ou
 
         uid = f"{start_date.strftime('%Y%m%d')}-{name_en.replace(' ', '-').lower()}-{bundesland.lower()}@austrian-school-holidays.local"
 
-        ics_lines.extend([
-            "BEGIN:VEVENT",
-            f"DTSTART;VALUE=DATE:{start_date.strftime('%Y%m%d')}",
-            f"DTEND;VALUE=DATE:{dtend.strftime('%Y%m%d')}",
-            f"DTSTAMP:{datetime.now().strftime('%Y%m%dT%H%M%SZ')}",
-            f"UID:{uid}",
-            f"SUMMARY:{name_de}",
-            f"DESCRIPTION:{name_en} - Schulferien in {bundesland}",
-            "TRANSP:TRANSPARENT",
-            "STATUS:CONFIRMED",
-            "SEQUENCE:0",
-            "END:VEVENT"
-        ])
+        ics_lines.extend(create_ics_event(start_date, dtend, name_de, f"{name_en} - Schulferien in {bundesland}", uid))
 
     ics_lines.append("END:VCALENDAR")
 
@@ -365,8 +315,8 @@ def generate_school_holiday_ics(bundesland, start_year, end_year, output_dir="ou
                            .replace('ö', 'oe')
                            .replace('ü', 'ue'))
     filename = f"{output_dir}/school_holidays_{bundesland_filename}.ics"
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write('\r\n'.join(ics_lines))
+
+    write_ics_file(filename, ics_lines)
 
     return filename
 
