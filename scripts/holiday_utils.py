@@ -37,6 +37,25 @@ def calculate_easter(year):
     return datetime(year, month, day)
 
 
+def normalize_filename(text):
+    """
+    Convert text to filename-safe format
+    Handles German and Austrian umlauts
+
+    Args:
+        text: String to normalize
+
+    Returns:
+        Filename-safe string
+    """
+    return (text.lower()
+            .replace('ä', 'ae')
+            .replace('ö', 'oe')
+            .replace('ü', 'ue')
+            .replace('ß', 'ss')
+            .replace(' ', '-')
+            .replace('/', '-'))
+
 def generate_ics_header(cal_name, cal_desc):
     """Generate standard ICS header"""
     return [
