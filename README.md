@@ -2,6 +2,9 @@
 
 Subscribe to Austrian holidays in your favorite calendar app!
 
+
+This is hosted at https://public-holidays.github.io 
+
 ---
 
 ## 📅 Public Holidays (Nationwide)
