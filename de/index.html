@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇩🇪 Deutsche Feiertage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #000000 0%, #dd0000 50%, #ffce00 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #000000 0%, #dd0000 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .support-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .support-badge:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            background: #f8f9fa;
+            padding: 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-item label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9em;
+        }
+
+        select {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+            font-size: 1em;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #dd0000;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            color: #495057;
+        }
+
+        .tab.active {
+            color: #dd0000;
+            border-bottom-color: #dd0000;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            color: #dd0000;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #dd0000;
+        }
+
+        .holiday-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .holiday-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #dd0000;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .holiday-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .holiday-card h3 {
+            color: #dd0000;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .holiday-card .date {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .holiday-card .subtitle {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .holiday-card .scope-badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .holiday-card .scope-badge.bundesweit {
+            background: #28a745;
+            color: white;
+        }
+
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            background: #000;
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: help;
+            flex-shrink: 0;
+        }
+
+        .info-icon:hover {
+            background: #dd0000;
+        }
+
+        .tooltip {
+            position: fixed;
+            background: #2d3748;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            line-height: 1.5;
+            z-index: 1000;
+            max-width: 300px;
+            width: max-content;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: none;
+            pointer-events: none;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #000000 0%, #dd0000 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .download-section h3 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .download-btn {
+            background: white;
+            color: #dd0000;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s;
+            display: block;
+            text-align: center;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .info-box a {
+            color: #856404;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .control-group {
+                flex-direction: column;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="https://ko-fi.com/reinhold" target="_blank" rel="noopener" class="support-badge">
+                ☕ Unterstützen
+            </a>
+            <h1>🇩🇪 Deutsche Feiertage</h1>
+            <p>Interaktiver Kalender für gesetzliche Feiertage</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <div class="control-item">
+                    <label>Jahr</label>
+                    <select id="yearSelect" onchange="updateCalendar()">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label>Bundesland</label>
+                    <select id="bundeslandSelect" onchange="updateCalendar()">
+                        <option value="Baden-Württemberg">Baden-Württemberg</option>
+                        <option value="Bayern">Bayern</option>
+                        <option value="Berlin">Berlin</option>
+                        <option value="Brandenburg">Brandenburg</option>
+                        <option value="Bremen">Bremen</option>
+                        <option value="Hamburg">Hamburg</option>
+                        <option value="Hessen">Hessen</option>
+                        <option value="Mecklenburg-Vorpommern">Mecklenburg-Vorpommern</option>
+                        <option value="Niedersachsen">Niedersachsen</option>
+                        <option value="Nordrhein-Westfalen">Nordrhein-Westfalen</option>
+                        <option value="Rheinland-Pfalz">Rheinland-Pfalz</option>
+                        <option value="Saarland">Saarland</option>
+                        <option value="Sachsen">Sachsen</option>
+                        <option value="Sachsen-Anhalt">Sachsen-Anhalt</option>
+                        <option value="Schleswig-Holstein">Schleswig-Holstein</option>
+                        <option value="Thüringen">Thüringen</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('holidays')">Feiertage</button>
+                <button class="tab" onclick="switchTab('download')">Kalender herunterladen</button>
+            </div>
+
+            <div id="holidays-tab" class="tab-content active">
+                <h2>📅 Gesetzliche Feiertage <span id="holiday-year"></span> - <span id="holiday-bundesland"></span></h2>
+                <div class="info-box">
+                    <p>Gesetzliche Feiertage sind in den Feiertagsgesetzen der Bundesländer geregelt. Quelle: <a href="https://de.wikipedia.org/wiki/Feiertag_(Deutschland)" target="_blank" rel="noopener">Wikipedia</a></p>
+                </div>
+                <div id="holidays" class="holiday-grid">
+                    <div class="loading">Lade Feiertage...</div>
+                </div>
+            </div>
+
+            <div id="download-tab" class="tab-content">
+                <h2>📥 ICS-Kalender herunterladen</h2>
+
+                <div class="download-section">
+                    <h3>Gesetzliche Feiertage nach Bundesland</h3>
+                    <p>Abonnieren Sie diese Kalender, um automatisch alle Feiertage zu erhalten (fortlaufend aktualisiert)</p>
+                    <div class="download-grid">
+                        <a href="../output/german_holidays_baden-wuerttemberg.ics" class="download-btn">Baden-Württemberg</a>
+                        <a href="../output/german_holidays_bayern.ics" class="download-btn">Bayern</a>
+                        <a href="../output/german_holidays_berlin.ics" class="download-btn">Berlin</a>
+                        <a href="../output/german_holidays_brandenburg.ics" class="download-btn">Brandenburg</a>
+                        <a href="../output/german_holidays_bremen.ics" class="download-btn">Bremen</a>
+                        <a href="../output/german_holidays_hamburg.ics" class="download-btn">Hamburg</a>
+                        <a href="../output/german_holidays_hessen.ics" class="download-btn">Hessen</a>
+                        <a href="../output/german_holidays_mecklenburg-vorpommern.ics" class="download-btn">Mecklenburg-Vorpommern</a>
+                        <a href="../output/german_holidays_niedersachsen.ics" class="download-btn">Niedersachsen</a>
+                        <a href="../output/german_holidays_nordrhein-westfalen.ics" class="download-btn">Nordrhein-Westfalen</a>
+                        <a href="../output/german_holidays_rheinland-pfalz.ics" class="download-btn">Rheinland-Pfalz</a>
+                        <a href="../output/german_holidays_saarland.ics" class="download-btn">Saarland</a>
+                        <a href="../output/german_holidays_sachsen.ics" class="download-btn">Sachsen</a>
+                        <a href="../output/german_holidays_sachsen-anhalt.ics" class="download-btn">Sachsen-Anhalt</a>
+                        <a href="../output/german_holidays_schleswig-holstein.ics" class="download-btn">Schleswig-Holstein</a>
+                        <a href="../output/german_holidays_thueringen.ics" class="download-btn">Thüringen</a>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>📖 So abonnieren Sie</h4>
+                    <p><strong>Google Kalender:</strong> Klicken Sie auf + neben "Weitere Kalender" → Über URL → Link einfügen</p>
+                    <p><strong>Apple Kalender:</strong> Einstellungen → Kalender → Accounts → Abonnierter Kalender hinzufügen</p>
+                    <p><strong>Outlook:</strong> Kalender hinzufügen → Aus dem Web abonnieren → Link einfügen</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>🇩🇪 Deutsche Feiertage</strong></p>
+            <p>Berechnet in Echtzeit nach deutschen Feiertagsgesetzen</p>
+            <p style="margin-top: 10px;">Osterdaten nach dem Gauß'schen Algorithmus berechnet</p>
+            <p style="margin-top: 15px;">
+                <a href="https://github.com/Public-holidays/holidays" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px;">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    Quellcode auf GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Gauss Easter Algorithm
+        function calculateEaster(year) {
+            const a = year % 19;
+            const b = year % 4;
+            const c = year % 7;
+            const k = Math.floor(year / 100);
+            const p = Math.floor((13 + 8 * k) / 25);
+            const q = Math.floor(k / 4);
+            const M = (15 - p + k - q) % 30;
+            const N = (4 + k - q) % 7;
+            const d = (19 * a + M) % 30;
+            const e = (2 * b + 4 * c + 6 * d + N) % 7;
+
+            let day, month;
+            if (d + e < 10) {
+                day = d + e + 22;
+                month = 3;
+            } else {
+                day = d + e - 9;
+                month = 4;
+            }
+
+            if (day === 26 && month === 4) day = 19;
+            if (day === 25 && month === 4 && d === 28 && e === 6 && a > 10) day = 18;
+
+            return new Date(year, month - 1, day);
+        }
+
+        function addDays(date, days) {
+            const result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+
+        function formatDate(date) {
+            const days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+            const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                          'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+            return `${days[date.getDay()]}, ${date.getDate()}. ${months[date.getMonth()]} ${date.getFullYear()}`;
+        }
+
+        function getBussUndBettag(year) {
+            const dec25 = new Date(year, 11, 25);
+            const daysFromSunday = (dec25.getDay() + 1) % 7;
+            const fourthAdventSunday = new Date(dec25);
+            fourthAdventSunday.setDate(fourthAdventSunday.getDate() - daysFromSunday);
+            const firstAdventSunday = new Date(fourthAdventSunday);
+            firstAdventSunday.setDate(firstAdventSunday.getDate() - 21);
+            const bussUndBettag = new Date(firstAdventSunday);
+            bussUndBettag.setDate(bussUndBettag.getDate() - 11);
+            return bussUndBettag;
+        }
+
+        function getGermanHolidays(year, bundesland) {
+            const easter = calculateEaster(year);
+
+            const holidays = [
+                { date: new Date(year, 0, 1), name: 'Neujahr', nameEn: 'New Year\'s Day', scope: 'bundesweit', info: 'Fixdatum, 1. Januar' },
+                { date: addDays(easter, -2), name: 'Karfreitag', nameEn: 'Good Friday', scope: 'bundesweit', info: 'Beweglicher Feiertag, 2 Tage vor Ostersonntag' },
+                { date: addDays(easter, 1), name: 'Ostermontag', nameEn: 'Easter Monday', scope: 'bundesweit', info: 'Beweglicher Feiertag, 1 Tag nach Ostersonntag' },
+                { date: new Date(year, 4, 1), name: 'Tag der Arbeit', nameEn: 'Labour Day', scope: 'bundesweit', info: 'Fixdatum, 1. Mai' },
+                { date: addDays(easter, 39), name: 'Christi Himmelfahrt', nameEn: 'Ascension Day', scope: 'bundesweit', info: 'Beweglicher Feiertag, 39 Tage nach Ostersonntag' },
+                { date: addDays(easter, 50), name: 'Pfingstmontag', nameEn: 'Whit Monday', scope: 'bundesweit', info: 'Beweglicher Feiertag, 50 Tage nach Ostersonntag' },
+                { date: new Date(year, 9, 3), name: 'Tag der Deutschen Einheit', nameEn: 'German Unity Day', scope: 'bundesweit', info: 'Fixdatum, 3. Oktober - Nationalfeiertag' },
+                { date: new Date(year, 11, 25), name: '1. Weihnachtsfeiertag', nameEn: 'Christmas Day', scope: 'bundesweit', info: 'Fixdatum, 25. Dezember' },
+                { date: new Date(year, 11, 26), name: '2. Weihnachtsfeiertag', nameEn: 'St. Stephen\'s Day', scope: 'bundesweit', info: 'Fixdatum, 26. Dezember' }
+            ];
+
+            if (['Baden-Württemberg', 'Bayern', 'Sachsen-Anhalt'].includes(bundesland)) {
+                holidays.push({ date: new Date(year, 0, 6), name: 'Heilige Drei Könige', nameEn: 'Epiphany', scope: 'regional', info: 'Fixdatum, 6. Januar' });
+            }
+
+            if (['Berlin', 'Mecklenburg-Vorpommern'].includes(bundesland)) {
+                holidays.push({ date: new Date(year, 2, 8), name: 'Internationaler Frauentag', nameEn: 'International Women\'s Day', scope: 'regional', info: 'Fixdatum, 8. März (seit 2023 in Berlin und MV)' });
+            }
+
+            if (['Baden-Württemberg', 'Bayern', 'Hessen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz', 'Saarland'].includes(bundesland)) {
+                holidays.push({ date: addDays(easter, 60), name: 'Fronleichnam', nameEn: 'Corpus Christi', scope: 'regional', info: 'Beweglicher Feiertag, 60 Tage nach Ostersonntag' });
+            }
+
+            if (bundesland === 'Bayern') {
+                holidays.push({ date: new Date(year, 7, 8), name: 'Augsburger Friedensfest', nameEn: 'Augsburg Peace Festival', scope: 'nur Stadt Augsburg', info: 'Fixdatum, 8. August - nur in der Stadt Augsburg' });
+            }
+
+            if (bundesland === 'Saarland') {
+                holidays.push({ date: new Date(year, 7, 15), name: 'Mariä Himmelfahrt', nameEn: 'Assumption of Mary', scope: 'regional', info: 'Fixdatum, 15. August' });
+            } else if (bundesland === 'Bayern') {
+                holidays.push({ date: new Date(year, 7, 15), name: 'Mariä Himmelfahrt', nameEn: 'Assumption of Mary', scope: 'nur in überwiegend katholischen Gemeinden', info: 'Fixdatum, 15. August - nur in überwiegend katholischen Gemeinden Bayerns' });
+            }
+
+            if (bundesland === 'Thüringen') {
+                holidays.push({ date: new Date(year, 8, 20), name: 'Weltkindertag', nameEn: 'World Children\'s Day', scope: 'regional', info: 'Fixdatum, 20. September (seit 2019 in Thüringen)' });
+            }
+
+            if (['Brandenburg', 'Mecklenburg-Vorpommern', 'Sachsen', 'Sachsen-Anhalt', 'Thüringen', 'Bremen', 'Hamburg', 'Niedersachsen', 'Schleswig-Holstein'].includes(bundesland)) {
+                holidays.push({ date: new Date(year, 9, 31), name: 'Reformationstag', nameEn: 'Reformation Day', scope: 'regional', info: 'Fixdatum, 31. Oktober' });
+            }
+
+            if (['Baden-Württemberg', 'Bayern', 'Nordrhein-Westfalen', 'Rheinland-Pfalz', 'Saarland'].includes(bundesland)) {
+                holidays.push({ date: new Date(year, 10, 1), name: 'Allerheiligen', nameEn: 'All Saints\' Day', scope: 'regional', info: 'Fixdatum, 1. November' });
+            }
+
+            if (bundesland === 'Sachsen') {
+                holidays.push({ date: getBussUndBettag(year), name: 'Buß- und Bettag', nameEn: 'Day of Repentance and Prayer', scope: 'regional', info: 'Beweglicher Feiertag, Mittwoch vor dem letzten Sonntag vor dem 1. Advent' });
+            }
+
+            return holidays.sort((a, b) => a.date - b.date);
+        }
+
+        function renderHolidays(year, bundesland) {
+            const holidays = getGermanHolidays(year, bundesland);
+            const container = document.getElementById('holidays');
+            document.getElementById('holiday-year').textContent = year;
+            document.getElementById('holiday-bundesland').textContent = bundesland;
+
+            container.innerHTML = holidays.map(h => `
+                <div class="holiday-card">
+                    <h3>
+                        ${h.name}
+                        <span class="info-icon" onmouseenter="showTooltip(event, '${h.info.replace(/'/g, "&#39;")}')" onmouseleave="hideTooltip()">i</span>
+                    </h3>
+                    <div class="date">${formatDate(h.date)}</div>
+                    <div class="subtitle">${h.nameEn}</div>
+                    <div class="scope-badge ${h.scope === 'bundesweit' ? 'bundesweit' : ''}">${h.scope}</div>
+                </div>
+            `).join('');
+        }
+
+        let tooltipElement = null;
+
+        function showTooltip(event, text) {
+            hideTooltip();
+
+            tooltipElement = document.createElement('div');
+            tooltipElement.className = 'tooltip';
+            tooltipElement.style.display = 'block';
+            tooltipElement.textContent = text;
+            document.body.appendChild(tooltipElement);
+
+            const iconRect = event.target.getBoundingClientRect();
+            tooltipElement.style.left = (iconRect.right + 10) + 'px';
+            tooltipElement.style.top = iconRect.top + 'px';
+        }
+
+        function hideTooltip() {
+            if (tooltipElement) {
+                tooltipElement.remove();
+                tooltipElement = null;
+            }
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        function updateCalendar() {
+            const year = parseInt(document.getElementById('yearSelect').value);
+            const bundesland = document.getElementById('bundeslandSelect').value;
+
+            renderHolidays(year, bundesland);
+        }
+
+        function init() {
+            const currentYear = new Date().getFullYear();
+            const yearSelect = document.getElementById('yearSelect');
+
+            // Populate year dropdown (current year - 1 to + 5)
+            for (let year = currentYear - 1; year <= currentYear + 5; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                if (year === currentYear) option.selected = true;
+                yearSelect.appendChild(option);
+            }
+
+            // Initial render
+            updateCalendar();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

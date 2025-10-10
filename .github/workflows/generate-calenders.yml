@@ -8,7 +8,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'scripts/generate-holidays.py'
+      - 'scripts/generate_holidays_at.py'
 
 jobs:
   generate:
@@ -25,9 +25,10 @@ jobs:
     
     - name: Generate calendar files
       run: |
-        cd scripts
-        python generate-holidays.py
-        python generate_school_holidays.py
+        python scripts/generate_holidays_at.py
+        python scripts/generate_school_holidays.py
+        python scripts/generate_holidays_de.py
+        python scripts/generate_sitemap_fragment.py
         
     - name: Commit and push if changes
       run: |
@@ -35,3 +36,13 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add -A
         git diff --quiet && git diff --staged --quiet || (git commit -m "Update holiday calendars [automated]" && git push)
+
+    - name: Trigger root repo sitemap update
+      if: steps.check_changes.outputs.changes == 'true'
+      run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.ROOT_REPO_PAT }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/public-holidays/public-holidays.github.io/dispatches \
+            -d '{"event_type":"update-sitemap"}'
